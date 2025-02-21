@@ -1,10 +1,12 @@
 import React from 'react';
 import {usePathname} from "next/navigation";
-import {SheetTrigger} from "@/components/ui/sheet";
+import {SheetContent, SheetTrigger, Sheet} from "@/components/ui/sheet";
+import {CiMenuFries} from "react-icons/ci";
+import Link from 'next/link';
 
 const MobileNav = () => {
 
-    const links= [
+    const links = [
         {
             name: 'home',
             path: '/',
@@ -30,10 +32,18 @@ const MobileNav = () => {
 
     return (
         <Sheet>
-            <SheetTrigger classname="flex justify-between items-center" >
-
+            <SheetTrigger clasName="flex justify-between items-center">
+                <CiMenuFries className="text-[32px] text-accent"/>
             </SheetTrigger>
-
+            <SheetContent className="flex flex-col">
+                <div className="mt-32 mb-40 text-center text-2xl">
+                    <Link href="/">
+                        <h1 className="text-4xl font-semibold">
+                            Serhii<span className="text-accent">.</span>
+                        </h1>
+                    </Link>
+                </div>
+            </SheetContent>
         </Sheet>
     );
 };
