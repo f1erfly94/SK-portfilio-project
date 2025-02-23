@@ -1,5 +1,6 @@
 'use client';
 import React from 'react';
+import NextImage from "next/image";
 import Link from 'next/link';
 import Nav from "@/components/Nav";
 import {Button} from "@/components/ui/button";
@@ -11,9 +12,8 @@ const Header = () => {
             <div
                 className="container mx-auto flex justify-between items-center">
                 <Link href="/">
-                    <h1 className="text-4xl font-semibold">
-                       сюди щось добавим)
-
+                    <h1 className="text-4xl font-semibold flex items-center">
+                        <NextImage src="/assets/Logo.png" alt="Logo" width={80} height={80} />
                     </h1>
                 </Link>
 
