@@ -44,7 +44,7 @@ const Contacts = () => {
                 opacity: 1,
                 transition: { delay: 2.4, duration: 0.4, ease: "easeInOut" },
             }}
-            className="py-6"
+            className="py-6 mr-7 ml-7"
         >
             <div className="container mx-auto">
                 <div className="flex flex-col xl:flex-row gap-[30px]">
@@ -53,8 +53,8 @@ const Contacts = () => {
                             <h3 className="text-4xl text-accent">Let's work together</h3>
                             <p className="text-white/60">Please fill out the form below to get in touch with me.</p>
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                <Input type="text" placeholder="Firstname" />
-                                <Input type="text" placeholder="Lastname" />
+                                <Input type="text" placeholder="First name" />
+                                <Input type="text" placeholder="Last name" />
                                 <Input type="email" placeholder="Email address" />
                                 <Input type="tel" placeholder="Phone number" />
                             </div>

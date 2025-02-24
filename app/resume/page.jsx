@@ -51,7 +51,7 @@ const education = {
             duration: "2018-2019"
         },
         {institution: "dev{education}", degree: "Programming Course Front-End", duration: "2019-2020"},
-        {institution: "Web Design UI/UX", degree: "Programming Course Front-End", duration: "2024-2024"},
+        {institution: "Playtech University", degree: "Web Design UI/UX Beginner course", duration: "2024-2024"},
     ]
 };
 
@@ -74,8 +74,15 @@ const skills = {
 
     ]
 };
+const text = `Managed application state and integrated RESTful APIs
+Developed and enhanced software functionality and services
+Added new features, improved existing ones, and fixed bugs
+Collaborated with team members and cross-functional teams
+Took part in code reviews and contributed via Git
+Participated in estimations and meetings`;
 
 const Resume = () => {
+    const items = text.split('\n');
     return (
         <motion.div
             initial={{opacity: 0}}
@@ -98,22 +105,35 @@ const Resume = () => {
                     </TabsList>
                     <div className="min-h-[70vh] w-full">
                         <TabsContent value="experience" className="w-full">
-                            <div className="flex flex-col gap-[30px] text-center xl:text-left">
+                            <div className="flex flex-col gap-[30px] ml-7 mr-7 text-center xl:text-left">
                                 <h3 className="text-4xl font-bold">{experience.title}</h3>
-                                <p className="max-w-[600px] text-white/60 mx-auto xl:mx-0">{experience.description}</p>
-                                <ScrollArea className="h-[400px]">
+                                <p className="max-w-[600px] text-white/60 mx-auto xl:mx-0 ml-7 mr-7">{experience.description}</p>
+                                <ScrollArea className="h-auto">
                                     <ul className="grid grid-cols-1 lg:grid-cols-2 gap-[30px]">
                                         {experience.items.map((item, index) => {
                                             return <li
                                                 key={index}
-                                                className="bg-[#27272c] h-[184px] py-6 px-10 rounded-xl flex flex-col justify-center items-center lg:items-start gap-1"
+                                                className="bg-[#27272c] h-auto py-6 px-10 rounded-xl flex flex-col justify-center items-center lg:items-start gap-1"
                                             >
-                                                <span className="text-accent">{item.duration} </span>
-                                                <h3 className="text-xl max-w-[260px] min-h-[30px] text-center lg:text-left">{item.position}</h3>
                                                 <div className="flex items-center gap-3">
                                                     <span className="w-[6px] h-[6px] rounded-full bg-accent"></span>
-                                                    <p className="text-white/60">{item.company}</p>
+                                                    <p className="text-accent">{item.duration} </p>
+                                                    <p className="text-white/60">
+                                                        - <a href="https://peiko.space/" target="_blank"
+                                                             rel="noopener noreferrer" className="underline">
+                                                        {item.company}
+                                                    </a>
+                                                    </p>
+
                                                 </div>
+
+                                                <h3 className="text-xl max-w-[260px] min-h-[30px] text-center lg:text-left">{item.position}</h3>
+
+                                                <ul className="list-disc pl-5">
+                                                    {items.map((item, index) => (
+                                                        <li key={index}>{item}</li>
+                                                    ))}
+                                                </ul>
                                             </li>
                                         })}
                                     </ul>
@@ -121,19 +141,19 @@ const Resume = () => {
                             </div>
                         </TabsContent>
                         <TabsContent value="education" className="w-full">
-                            <div className="flex flex-col gap-[30px] text-center xl:text-left">
+                            <div className="flex flex-col gap-[30px] text-center xl:text-left mr-7 ml-7">
                                 <h3 className="text-4xl font-bold">{education.title}</h3>
                                 <p className="max-w-[600px] text-white/60 mx-auto xl:mx-0">{education.description}</p>
-                                <ScrollArea className="h-[400px]">
+                                <ScrollArea className="h-auto">
                                     <ul className="grid grid-cols-1 lg:grid-cols-2 gap-[30px]">
                                         {education.items.map((item, index) => {
                                             return <li
                                                 key={index}
-                                                className="bg-[#27272c] h-[184px] py-6 px-10 rounded-xl flex flex-col justify-center items-center lg:items-start gap-1"
+                                                className="bg-[#27272c] h-auto py-6 px-10 rounded-xl flex flex-col justify-center items-center lg:items-start gap-1"
                                             >
                                                 <span className="text-accent">{item.degree} </span>
                                                 <h3 className="text-xl max-w-[260px] min-h-[20px] text-center lg:text-left">{item.duration}</h3>
-                                                <div className="flex items-center gap-3">
+                                                <div className="flex items-baseline gap-3">
                                                     <span className="w-[6px] h-[6px] rounded-full bg-accent"></span>
                                                     <p className="text-white/60">{item.institution}</p>
                                                 </div>
@@ -144,7 +164,7 @@ const Resume = () => {
                             </div>
                         </TabsContent>
                         <TabsContent value="skills" className="w-full h-full">
-                            <div className="flex flex-col gap-[30px]">
+                            <div className="flex flex-col gap-[30px] mr-7 ml-7">
                                 <div className="flex flex-col gap-[30px] text-center xl:text-left">
                                     <h3 className="text-4xl font-bold">{skills.title}</h3>
                                     <p className="max-w-[600px] text-white/60 mx-auto xl:mx-0">{skills.description}</p>
@@ -173,7 +193,7 @@ const Resume = () => {
                         </TabsContent>
                         <TabsContent value="about"
                                      className="w-full text-center xl:text-left">
-                            <div className="flex flex-col gap-[30px]">
+                            <div className="flex flex-col gap-[30px] mr-7 ml-7">
                                 <h3 className="text-4xl font-bold">{about.title}</h3>
                                 <p className="max-w-[600px] text-white/60 mx-auto xl:mx-0">{about.description}</p>
                                 <ul className="grid grid-cols-1 xl:grid-cols-2 gap-y-6 max-w-[680px] mx-auto xl:mx-0">

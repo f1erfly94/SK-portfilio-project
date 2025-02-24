@@ -1,14 +1,15 @@
 'use client';
+
 import React from 'react';
-import NextImage from "next/image";
 import Link from 'next/link';
+import NextImage from "next/image";
 import Nav from "@/components/Nav";
 import {Button} from "@/components/ui/button";
 import MobileNav from "@/components/MobileNav";
 
 const Header = () => {
     return (
-        <header className="py-8 xl:py-12 text-white">
+        <header className="py-8 xl:py-12 ml-7 mr-7 text-white">
             <div
                 className="container mx-auto flex justify-between items-center">
                 <Link href="/">

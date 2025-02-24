@@ -7,7 +7,6 @@ const Nav = () => {
 
     const pathname =  usePathname();
 
-    console.log(pathname)
     const links = [
         {
             name: 'home',
