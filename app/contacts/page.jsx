@@ -1,21 +1,13 @@
 "use client";
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 
 import {
-    Select,
-    SelectContent,
-    SelectGroup,
-    SelectItem,
-    SelectLabel,
-    SelectTrigger,
-    SelectValue,
-} from "@/components/ui/select";
-
-import { FaPhoneAlt, FaEnvelope, FaMapMarkerAlt } from "react-icons/fa";
+    FaPhoneAlt, FaEnvelope, FaMapMarkerAlt
+} from "react-icons/fa";
 import { motion } from "framer-motion";
 
 const info = [
@@ -37,6 +29,41 @@ const info = [
 ];
 
 const Contacts = () => {
+    const [errors, setErrors] = useState({});
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+
+        const formData = {
+            firstName: e.target.firstName.value,
+            lastName: e.target.lastName.value,
+            email: e.target.email.value,
+            phone: e.target.phone.value,
+            message: e.target.message.value,
+        };
+
+        const validationErrors = {};
+
+        // Валідація
+        if (!formData.firstName) validationErrors.firstName = "First name is required.";
+        if (!formData.lastName) validationErrors.lastName = "Last name is required.";
+        if (!formData.email || !/\S+@\S+\.\S+/.test(formData.email)) {
+            validationErrors.email = "A valid email address is required.";
+        }
+        if (!formData.phone || !/^\+?\d{1,3}[- ]?\(?\d{1,4}?\)?[- ]?\d{1,4}[- ]?\d{1,4}$/.test(formData.phone)) {
+            validationErrors.phone = "A valid phone number is required.";
+        }
+        if (!formData.message) validationErrors.message = "Message is required.";
+
+        if (Object.keys(validationErrors).length > 0) {
+            setErrors(validationErrors);
+        } else {
+            // Якщо немає помилок, відправляй форму
+            setErrors({});
+            e.target.submit();
+        }
+    };
+
     return (
         <motion.section
             initial={{ opacity: 0 }}
@@ -49,24 +76,73 @@ const Contacts = () => {
             <div className="container mx-auto">
                 <div className="flex flex-col xl:flex-row gap-[30px]">
                     <div className="xl:w-[54%] order-2 xl:order-none">
-                        <form className="flex flex-col gap-6 p-10 bg-[#27272c] rounded-xl">
+                        <form
+                            action="https://formspree.io/f/manqgydl"
+                            method="POST"
+                            onSubmit={handleSubmit}
+                            className="flex flex-col gap-6 p-10 bg-[#27272c] rounded-xl"
+                        >
                             <h3 className="text-4xl text-accent">Let's work together</h3>
                             <p className="text-white/60">Please fill out the form below to get in touch with me.</p>
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                <Input type="text" placeholder="First name" />
-                                <Input type="text" placeholder="Last name" />
-                                <Input type="email" placeholder="Email address" />
-                                <Input type="tel" placeholder="Phone number" />
+                                <Input
+                                    type="text"
+                                    name="firstName"
+                                    placeholder="First name"
+                                    required
+                                    className={`${
+                                        errors.firstName ? 'border-red-500' : 'border-gray-300'
+                                    }`}
+                                />
+                                {errors.firstName && <span className="text-red-500 text-sm">{errors.firstName}</span>}
+                                <Input
+                                    type="text"
+                                    name="lastName"
+                                    placeholder="Last name"
+                                    required
+                                    className={`${
+                                        errors.lastName ? 'border-red-500' : 'border-gray-300'
+                                    }`}
+                                />
+                                {errors.lastName && <span className="text-red-500 text-sm">{errors.lastName}</span>}
+                                <Input
+                                    type="email"
+                                    name="email"
+                                    placeholder="Email address"
+                                    required
+                                    className={`${
+                                        errors.email ? 'border-red-500' : 'border-gray-300'
+                                    }`}
+                                />
+                                {errors.email && <span className="text-red-500 text-sm">{errors.email}</span>}
+                                <Input
+                                    type="tel"
+                                    name="phone"
+                                    placeholder="Phone number"
+                                    required
+                                    className={`${
+                                        errors.phone ? 'border-red-500' : 'border-gray-300'
+                                    }`}
+                                />
+                                {errors.phone && <span className="text-red-500 text-sm">{errors.phone}</span>}
                             </div>
-                            <Textarea className="h-[200px]" placeholder="Type your message here." />
-                            <Button size="sm" className="max-w-40">Send message</Button>
+                            <Textarea
+                                name="message"
+                                className={`h-[200px] ${errors.message ? 'border-red-500' : 'border-gray-300'}`}
+                                placeholder="Type your message here."
+                                required
+                            />
+                            {errors.message && <span className="text-red-500 text-sm">{errors.message}</span>}
+                            <Button type="submit" size="sm" className="max-w-40">Send message</Button>
                         </form>
                     </div>
                     <div className="flex-1 flex items-center xl:justify-end order-1 xl:order-none mb-8 xl:mb-0">
                         <ul className="flex flex-col gap-10">
                             {info.map((item, index) => (
                                 <li key={index} className="flex items-center gap-6">
-                                    <div className="w-[52px] h-[52px] xl:w-[72px] xl:h-[72px] bg-[#27272c] text-accent rounded-md flex items-center justify-center">{item.icon}</div>
+                                    <div className="w-[52px] h-[52px] xl:w-[72px] xl:h-[72px] bg-[#27272c] text-accent rounded-md flex items-center justify-center">
+                                        {item.icon}
+                                    </div>
                                     <div className="flex-1">
                                         <p className="text-white/60">{item.title}</p>
                                         <h3 className="text-xl">{item.description}</h3>
