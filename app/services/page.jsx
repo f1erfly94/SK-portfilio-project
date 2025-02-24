@@ -9,7 +9,7 @@ const services = [
     {
         num: "01",
         title: "Web Development",
-        description: "Lorem ipsum dolor sit amet, consectetur elit.",
+        description: "Building modern, responsive, and scalable websites and web applications to meet business needs.",
         href: "#",
     },
     {
@@ -39,7 +39,7 @@ const services = [
     {
         num: "06",
         title: "UX/UI Design",
-        description: "Lorem ipsum dolor sit amet, consectetur elit.",
+        description: "Creating intuitive, user-friendly interfaces that deliver an exceptional experience across all devices.",
         href: "#",
     },
 ];
