@@ -19,6 +19,11 @@ const info = [
     {
         icon: <FaEnvelope />,
         title: "Email",
+        description: "99speedyz@gmail.com",
+    },
+    {
+        icon: <FaEnvelope />,
+        title: "Second Email",
         description: "f1erfly@outlook.com",
     },
     {
@@ -44,7 +49,7 @@ const Contacts = () => {
 
         const validationErrors = {};
 
-        // Валідація
+
         if (!formData.firstName) validationErrors.firstName = "First name is required.";
         if (!formData.lastName) validationErrors.lastName = "Last name is required.";
         if (!formData.email || !/\S+@\S+\.\S+/.test(formData.email)) {
@@ -58,7 +63,6 @@ const Contacts = () => {
         if (Object.keys(validationErrors).length > 0) {
             setErrors(validationErrors);
         } else {
-            // Якщо немає помилок, відправляй форму
             setErrors({});
             e.target.submit();
         }

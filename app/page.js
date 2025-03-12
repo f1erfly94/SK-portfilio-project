@@ -1,4 +1,4 @@
-import Image from "next/image";
+'use client'
 import {Button} from "@/components/ui/button";
 import {FiDownload} from "react-icons/fi";
 import Socials from "@/components/Socials";
@@ -7,6 +7,18 @@ import Stats from "@/components/Stats";
 
 export default function Home() {
 
+    const handleDownloadCV = () => {
+        const fileName = 'Kuznetsov_Serhii_CV.pdf';
+        const cvPath = '/assets/download/Kuznetsov_Serhii_CV.pdf';
+
+
+        const link = document.createElement('a');
+        link.href = cvPath;
+        link.download = fileName;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    };
     return (
         <section className="h-full">
             <div className="container mx-auto h-full">
@@ -21,10 +33,15 @@ export default function Home() {
                             Let&apos;s create something amazing together!
                         </p>
                         <div className="flex flex-col xl:flex-row items-center gap-8">
-                            {/*<Button variant="outline" size="lg" className="uppercase flex items-center gap-2">*/}
-                            {/*    <span>Download CV</span>*/}
-                            {/*    <FiDownload className="text-xl"/>*/}
-                            {/*</Button>*/}
+                            <Button
+                                variant="outline"
+                                size="lg"
+                                className="uppercase flex items-center gap-2"
+                                onClick={handleDownloadCV}
+                            >
+                                <span>Download CV</span>
+                                <FiDownload className="text-xl"/>
+                            </Button>
                             <div className="mb-8 xl:mb-0">
                                 <Socials
                                     containerStyles="flex gap-6"
