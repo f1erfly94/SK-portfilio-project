@@ -5,8 +5,7 @@ import {motion} from "framer-motion";
 import {ScrollArea} from "@/components/ui/scroll-area";
 import {Tabs, TabsContent, TabsList, TabsTrigger} from "@/components/ui/tabs";
 import {Tooltip, TooltipContent, TooltipProvider, TooltipTrigger} from "@/components/ui/tooltip";
-import {FaHtml5, FaCss3, FaReact, FaFigma, FaJs, FaGithub, FaCss3Alt} from 'react-icons/fa';
-import {RiNextjsLine} from "react-icons/ri";
+import {FaHtml5, FaReact, FaFigma, FaJs, FaGithub, FaCss3Alt} from 'react-icons/fa';
 import {TbBrandPrisma} from "react-icons/tb";
 import {SiTypescript, SiRedux, SiTailwindcss, SiWebpack, SiNextdotjs} from "react-icons/si";
 
@@ -30,7 +29,7 @@ const experience = {
     title: 'My experience',
     description: "Skilled Front-End Developer with expertise in building responsive, user-friendly interfaces.",
     items: [
-        {company: "Peiko", position: "Front-End Developer", duration: "2022-2024", }
+        {company: "Peiko", position: "Front-End Developer", duration: "2022-2024",}
     ]
 };
 

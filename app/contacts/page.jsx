@@ -1,36 +1,36 @@
 "use client";
 
-import React, { useState } from 'react';
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
+import React, {useState} from 'react';
+import {Button} from "@/components/ui/button";
+import {Input} from "@/components/ui/input";
+import {Textarea} from "@/components/ui/textarea";
 
 import {
     FaPhoneAlt, FaEnvelope, FaMapMarkerAlt, FaTelegram
 } from "react-icons/fa";
-import { motion } from "framer-motion";
+import {motion} from "framer-motion";
 
 const info = [
     {
-        icon: <FaPhoneAlt />,
+        icon: <FaPhoneAlt/>,
         title: "Phone",
         description: "+38 (067) 715 75 91",
         link: "tel:+380677157591"
     },
     {
-        icon: <FaEnvelope />,
+        icon: <FaEnvelope/>,
         title: "Email",
         description: "99speedyz@gmail.com",
         link: "mailto:99speedyz@gmail.com"
     },
     {
-        icon: <FaTelegram />,
+        icon: <FaTelegram/>,
         title: "Telegram",
         description: "anFleek",
         link: "https://t.me/anFleek",
     },
     {
-        icon: <FaMapMarkerAlt />,
+        icon: <FaMapMarkerAlt/>,
         title: "Address",
         description: "Ukraine, Cherkasy",
     },
@@ -73,10 +73,10 @@ const Contacts = () => {
 
     return (
         <motion.section
-            initial={{ opacity: 0 }}
+            initial={{opacity: 0}}
             animate={{
                 opacity: 1,
-                transition: { delay: 2.4, duration: 0.4, ease: "easeInOut" },
+                transition: {delay: 2.4, duration: 0.4, ease: "easeInOut"},
             }}
             className="py-6 mr-7 ml-7"
         >
@@ -147,7 +147,8 @@ const Contacts = () => {
                         <ul className="flex flex-col gap-10">
                             {info.map((item, index) => (
                                 <li key={index} className="flex items-center gap-6">
-                                    <div className="w-[52px] h-[52px] xl:w-[72px] xl:h-[72px] bg-[#27272c] text-accent rounded-md flex items-center justify-center">
+                                    <div
+                                        className="w-[52px] h-[52px] xl:w-[72px] xl:h-[72px] bg-[#27272c] text-accent rounded-md flex items-center justify-center">
                                         {item.icon}
                                     </div>
                                     <div className="flex-1">

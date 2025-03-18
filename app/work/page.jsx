@@ -1,13 +1,13 @@
 "use client";
 
-import React, { useState } from 'react';
-import { motion } from 'framer-motion';
+import React, {useState} from 'react';
+import {motion} from 'framer-motion';
 
-import { Swiper, SwiperSlide } from 'swiper/react';
+import {Swiper, SwiperSlide} from 'swiper/react';
 import "swiper/css";
 
-import { BsArrowUpRight, BsGithub } from 'react-icons/bs';
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import {BsArrowUpRight, BsGithub} from 'react-icons/bs';
+import {Tooltip, TooltipContent, TooltipProvider, TooltipTrigger} from "@/components/ui/tooltip";
 import Link from "next/link";
 import Image from "next/image";
 import WorkSliderBtns from "@/components/ui/WorkSliderBtns";
@@ -22,7 +22,7 @@ const projects = [
             '✅ Implemented a smooth navigation experience.\n' +
             '✅ Added contact forms with Telegram integration for quick customer inquiries.\n' +
             '✅ The site ensures responsiveness, fast performance, and a professional design.',
-        stack: [{ name: "Next.js" }, { name: "Tailwind CSS" }, { name: "TypeScript" }, { name: "HTML 5" }],
+        stack: [{name: "Next.js"}, {name: "Tailwind CSS"}, {name: "TypeScript"}, {name: "HTML 5"}],
         images: ['/assets/work/Scrap-metal.png'],
         live: "https://scrap-metal-ten.vercel.app/",
         github: "https://github.com/f1erfly94/Scrap-metal"
@@ -36,7 +36,7 @@ const projects = [
             '✅ Integrated Spotify API for real-time album and song data.\n' +
             '✅ Added smooth animations, a responsive design, and a modern UI using Next.js and Tailwind CSS.\n' +
             '✅ Implemented a parallax effect and audio player.',
-        stack: [{ name: "Next.js" }, { name: "Tailwind CSS" }, { name: "TypeScript" }, { name: "HTML 5" }],
+        stack: [{name: "Next.js"}, {name: "Tailwind CSS"}, {name: "TypeScript"}, {name: "HTML 5"}],
         images: ['/assets/work/LP.png'],
         live: "https://music-web-app-rho.vercel.app/",
         github: "https://github.com/f1erfly94/music-web-app"
@@ -52,10 +52,10 @@ const Work = () => {
 
     return (
         <motion.section
-            initial={{ opacity: 0 }}
+            initial={{opacity: 0}}
             animate={{
                 opacity: 1,
-                transition: { delay: 2.4, duration: 0.4, ease: "easeIn" },
+                transition: {delay: 2.4, duration: 0.4, ease: "easeIn"},
             }}
             className="min-h-[80vh] flex flex-col justify-center py-12 xl:px-0"
         >
@@ -73,13 +73,14 @@ const Work = () => {
                             <div className="text-white/60 whitespace-pre-line">{project.description}</div>
                             <ul className="flex gap-4">
                                 {project.stack.map((item, index) => (
-                                    <li key={index} className="text-xl text-accent hover:scale-110 transition-transform">
+                                    <li key={index}
+                                        className="text-xl text-accent hover:scale-110 transition-transform">
                                         {item.name}
                                         {index !== project.stack.length - 1 && ","}
                                     </li>
                                 ))}
                             </ul>
-                            <div className="border border-white/20" />
+                            <div className="border border-white/20"/>
                             <div className="flex items-center gap-4">
                                 <Link href={project.live} target="_blank" rel="noopener noreferrer">
                                     <TooltipProvider delayDuration={100}>
@@ -87,7 +88,7 @@ const Work = () => {
                                             <TooltipTrigger
                                                 className="w-[70px] h-[70px] rounded-full bg-white/5 flex justify-center items-center group">
                                                 <BsArrowUpRight
-                                                    className="text-white text-3xl group-hover:text-accent" />
+                                                    className="text-white text-3xl group-hover:text-accent"/>
                                             </TooltipTrigger>
                                             <TooltipContent>
                                                 <p>Live project</p>
@@ -100,7 +101,7 @@ const Work = () => {
                                         <Tooltip>
                                             <TooltipTrigger
                                                 className="w-[70px] h-[70px] rounded-full bg-white/5 flex justify-center items-center group">
-                                                <BsGithub className="text-white text-3xl group-hover:text-accent" />
+                                                <BsGithub className="text-white text-3xl group-hover:text-accent"/>
                                             </TooltipTrigger>
                                             <TooltipContent>
                                                 <p>Github repository</p>
