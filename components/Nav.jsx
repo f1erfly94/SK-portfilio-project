@@ -20,10 +20,9 @@ const Nav = () => {
             name: 'resume',
             path: '/resume',
         },
-
         {
-            name: 'contacts',
-            path: '/contacts',
+            name: 'work',
+            path: '/work',
         },
     ];
 

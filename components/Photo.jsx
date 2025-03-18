@@ -7,7 +7,6 @@ import Image from "next/image";
 const Photo = () => {
     return (
         <div className="w-full h-full relative">
-            {/* image */}
             <motion.div
                 initial={{ opacity: 0 }}
                 animate={{
@@ -25,7 +24,6 @@ const Photo = () => {
                         className="object-contain"
                     />
                 </div>
-                {/* circle */}
                 <motion.svg
                     className="w-[300px] xl:w-[506px] xl:h-[506px]"
                     fill="transparent"
@@ -33,11 +31,11 @@ const Photo = () => {
                     xmlns="http://www.w3.org/2000/svg"
                 >
                     <motion.circle
-                        cx="253"
+                        cx="250"
                         cy="253"
                         r="250"
                         stroke="#00ff99"
-                        strokeWidth="4"
+                        strokeWidth="5"
                         strokeLinecap="round"
                         strokeLinejoin="round"
                         initial={{ strokeDasharray: "24 10 0 0" }}

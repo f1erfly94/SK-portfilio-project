@@ -10,7 +10,8 @@ const links = [
     {name: 'home', path: '/'},
     {name: 'services', path: '/services'},
     {name: 'resume', path: '/resume'},
-    {name: 'contacts', path: '/contacts'},
+    {name: 'work', path: '/work'},
+    {name: 'Hire Me', path: '/contacts'},
 ];
 
 const MobileNav = () => {
@@ -18,7 +19,7 @@ const MobileNav = () => {
     const [open, setOpen] = useState(false);
 
     const handleLinkClick = () => {
-        setOpen(false); // закриває меню після кліку
+        setOpen(false);
     };
 
     return (

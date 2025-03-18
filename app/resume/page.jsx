@@ -15,13 +15,12 @@ const about = {
     description: "Passionate Frontend Developer with hands-on experience in modern web technologies.",
     info: [
         {fieldName: "Name:", fieldValue: " Serhii Kuznetsov"},
-        {fieldName: "Phone:", fieldValue: " (067) 715-75-91"},
-        {fieldName: "Experience:", fieldValue: " 3+ Years"},
-        {fieldName: "Telegram:", fieldValue: " anFleek"},
+        {fieldName: "Phone:", fieldValue: " +38 (067) 715-75-91", link: "tel:+380677157591"},
+        {fieldName: "Experience:", fieldValue: " 3 Years"},
+        {fieldName: "Telegram:", fieldValue: " anFleek", link: "https://t.me/anFleek"},
         {fieldName: "Open to work:", fieldValue: " Yes"},
-        {fieldName: "Email:", fieldValue: " f1erfly@outlook.com"},
-        {fieldName: "skype:", fieldValue: " with_speedy"},
         {fieldName: "Languages:", fieldValue: " Ukrainian, English"},
+        {fieldName: "Email:", fieldValue: "99speedyz@gmail.com", link: "mailto:99speedyz@gmail.com"}
 
     ]
 };
@@ -42,12 +41,12 @@ const education = {
     items: [
         {
             institution: "Kyiv National University of Construction and Architecture",
-            degree: "Bachelor’s degree in Computer Sciences",
+            degree: "Bachelor's degree in Computer Sciences",
             duration: "2014-2018"
         },
         {
             institution: "Kyiv National University of Construction and Architecture",
-            degree: "Master’s degree in Computer Sciences",
+            degree: "Master's degree in Computer Sciences",
             duration: "2018-2019"
         },
         {institution: "dev{education}", degree: "Programming Course Front-End", duration: "2019-2020"},
@@ -71,7 +70,6 @@ const skills = {
         {icon: <SiTailwindcss/>, name: 'Tailwind CSS'},
         {icon: <TbBrandPrisma/>, name: 'Prisma'},
         {icon: <FaFigma/>, name: 'Figma'},
-
     ]
 };
 const text = `Managed application state and integrated RESTful APIs
@@ -124,11 +122,8 @@ const Resume = () => {
                                                         {item.company}
                                                     </a>
                                                     </p>
-
                                                 </div>
-
                                                 <h3 className="text-xl max-w-[260px] min-h-[30px] text-center lg:text-left">{item.position}</h3>
-
                                                 <ul className="list-disc pl-5">
                                                     {items.map((item, index) => (
                                                         <li key={index}>{item}</li>
@@ -199,10 +194,19 @@ const Resume = () => {
                                 <ul className="grid grid-cols-1 xl:grid-cols-2 gap-y-6 max-w-[680px] mx-auto xl:mx-0">
                                     {about.info.map((item, index) => {
                                         return <li key={index}
-                                            className="flex items-center justify-center xl:justify-start gap-4"
+                                                   className="flex items-center justify-center xl:justify-start gap-4"
                                         >
                                             <span className="text-white/60">{item.fieldName}</span>
-                                            <span className="text-xl">{item.fieldValue}</span>
+                                            {item.link ? (
+                                                <a href={item.link}
+                                                   className="text-xl hover:text-accent transition-colors underline"
+                                                   target={item.link.startsWith('https') ? "_blank" : ""}
+                                                   rel={item.link.startsWith('https') ? "noopener noreferrer" : ""}>
+                                                    {item.fieldValue}
+                                                </a>
+                                            ) : (
+                                                <span className="text-xl">{item.fieldValue}</span>
+                                            )}
                                         </li>
                                     })}
                                 </ul>

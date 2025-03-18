@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 
 import {
-    FaPhoneAlt, FaEnvelope, FaMapMarkerAlt
+    FaPhoneAlt, FaEnvelope, FaMapMarkerAlt, FaTelegram
 } from "react-icons/fa";
 import { motion } from "framer-motion";
 
@@ -14,17 +14,20 @@ const info = [
     {
         icon: <FaPhoneAlt />,
         title: "Phone",
-        description: "(067) 715 75 91",
+        description: "+38 (067) 715 75 91",
+        link: "tel:+380677157591"
     },
     {
         icon: <FaEnvelope />,
         title: "Email",
         description: "99speedyz@gmail.com",
+        link: "mailto:99speedyz@gmail.com"
     },
     {
-        icon: <FaEnvelope />,
-        title: "Second Email",
-        description: "f1erfly@outlook.com",
+        icon: <FaTelegram />,
+        title: "Telegram",
+        description: "anFleek",
+        link: "https://t.me/anFleek",
     },
     {
         icon: <FaMapMarkerAlt />,
@@ -149,7 +152,16 @@ const Contacts = () => {
                                     </div>
                                     <div className="flex-1">
                                         <p className="text-white/60">{item.title}</p>
-                                        <h3 className="text-xl">{item.description}</h3>
+                                        {item.link ? (
+                                            <a
+                                                href={item.link}
+                                                className="text-xl hover:text-accent transition-colors underline"
+                                            >
+                                                {item.description}
+                                            </a>
+                                        ) : (
+                                            <h3 className="text-xl">{item.description}</h3>
+                                        )}
                                     </div>
                                 </li>
                             ))}
