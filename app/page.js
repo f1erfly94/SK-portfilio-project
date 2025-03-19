@@ -45,7 +45,7 @@ export default function Home() {
                             <div className="mb-8 xl:mb-0">
                                 <Socials
                                     containerStyles="flex gap-6"
-                                    iconStyles="w-15 h-15 border border-accent rounded-full flex justify-center items-center text-accent text-base hover:bg-accent hover:text-primary transition-all duration-500"
+                                    iconStyles="w-10 h-10 text-2xl border border-accent rounded-full flex justify-center items-center text-accent hover:bg-accent hover:text-primary transition-all duration-500"
                                 />
                             </div>
                         </div>
