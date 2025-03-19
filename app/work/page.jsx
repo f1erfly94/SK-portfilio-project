@@ -59,7 +59,7 @@ const Work = () => {
             }}
             className="min-h-[80vh] flex flex-col justify-center py-12 xl:px-0"
         >
-            <div className="container mx-auto">
+            <div className="container mx-auto px-4 ">
                 <div className="flex flex-col xl:flex-row xl:gap-[30px]">
                     <div
                         className="w-full xl:w-[50%] xl:h-[460px] flex flex-col xl:justify-between order-2 xl:order-none">
@@ -71,15 +71,16 @@ const Work = () => {
                                 {project.category}
                             </h2>
                             <div className="text-white/60 whitespace-pre-line">{project.description}</div>
-                            <ul className="flex gap-4">
-                                {project.stack.map((item, index) => (
-                                    <li key={index}
-                                        className="text-xl text-accent hover:scale-110 transition-transform">
-                                        {item.name}
-                                        {index !== project.stack.length - 1 && ","}
-                                    </li>
-                                ))}
-                            </ul>
+                            <div className="text-center sm:text-left">
+                                <ul className="flex flex-wrap justify-center sm:justify-start gap-2 sm:gap-4">
+                                    {project.stack.map((item, index) => (
+                                        <li key={index}
+                                            className="text-lg sm:text-xl text-accent hover:scale-110 transition-transform">
+                                            {item.name}{index !== project.stack.length - 1 && ","}
+                                        </li>
+                                    ))}
+                                </ul>
+                            </div>
                             <div className="border border-white/20"/>
                             <div className="flex items-center gap-4">
                                 <Link href={project.live} target="_blank" rel="noopener noreferrer">
