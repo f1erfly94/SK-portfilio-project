@@ -20,14 +20,14 @@ const info = [
     {
         icon: <FaEnvelope/>,
         title: "Email",
-        description: "99speedyz@gmail.com",
-        link: "mailto:99speedyz@gmail.com"
+        description: "serhii.kuznetsov05@gmail.com",
+        link: "mailto:serhii.kuznetsov05@gmail.com"
     },
     {
         icon: <FaTelegram/>,
         title: "Telegram",
-        description: "anFleek",
-        link: "https://t.me/anFleek",
+        description: "Serhii_Kuznetsov05",
+        link: "https://t.me/Serhii_Kuznetsov05",
     },
     {
         icon: <FaMapMarkerAlt/>,

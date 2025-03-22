@@ -4,7 +4,7 @@ import Link from 'next/link';
 
 const socials = [
     { icon: <FaGithub />, label: 'GitHub', path: 'https://github.com/f1erfly94' },
-    { icon: <FaTelegram />, label: 'Telegram', path: 'https://t.me/anFleek' },
+    { icon: <FaTelegram />, label: 'Telegram', path: 'https://t.me/Serhii_Kuznetsov05' },
     { icon: <FaLinkedin />, label: 'Linkedin', path: 'https://www.linkedin.com/in/serhii-kusnetsov-032823343/' },
 ];
 

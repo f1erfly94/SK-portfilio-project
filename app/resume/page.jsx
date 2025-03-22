@@ -16,10 +16,10 @@ const about = {
         {fieldName: "Name:", fieldValue: " Serhii Kuznetsov"},
         {fieldName: "Phone:", fieldValue: " +38 (067) 715-75-91", link: "tel:+380677157591"},
         {fieldName: "Experience:", fieldValue: " 3 Years"},
-        {fieldName: "Telegram:", fieldValue: " anFleek", link: "https://t.me/anFleek"},
+        {fieldName: "Telegram:", fieldValue: " Serhii_Kuznetsov05", link: "https://t.me/Serhii_Kuznetsov05"},
         {fieldName: "Open to work:", fieldValue: " Yes"},
         {fieldName: "Languages:", fieldValue: " Ukrainian, English"},
-        {fieldName: "Email:", fieldValue: "99speedyz@gmail.com", link: "mailto:99speedyz@gmail.com"}
+        {fieldName: "Email:", fieldValue: "serhii.kuznetsov05@gmail.com", link: "mailto:serhii.kuznetsov05@gmail.com"}
 
     ]
 };
@@ -190,7 +190,7 @@ const Resume = () => {
                             <div className="flex flex-col gap-[30px] mr-7 ml-7">
                                 <h3 className="text-4xl font-bold">{about.title}</h3>
                                 <p className="max-w-[600px] text-white/60 mx-auto xl:mx-0">{about.description}</p>
-                                <ul className="grid grid-cols-1 xl:grid-cols-2 gap-y-6 max-w-[680px] mx-auto xl:mx-0">
+                                <ul className="grid grid-cols-1 xl:grid-cols-2 gap-y-6 max-w-[980px] mx-auto xl:mx-0">
                                     {about.info.map((item, index) => {
                                         return <li key={index}
                                                    className="flex items-center justify-center xl:justify-start gap-4"
