@@ -15,6 +15,62 @@ import WorkSliderBtns from "@/components/ui/WorkSliderBtns";
 const projects = [
     {
         num: '01',
+        category: 'SaaS Landing Page',
+        title: 'Lumora — AI Analytics Landing Page',
+        description:
+            '✅ Designed and built an animated SaaS landing page for an AI-powered product-analytics platform.\n' +
+            '✅ Live churn/retention chart mock, feature grid, pricing tiers, and testimonials.\n' +
+            '✅ Full UA/EN localization with a language switcher.\n' +
+            '✅ Fully responsive, dark-themed UI with smooth entrance animations.',
+        stack: [{name: "Next.js"}, {name: "Tailwind CSS"}, {name: "TypeScript"}, {name: "HTML 5"}],
+        images: ['/assets/work/Lumora-lending-saas.png'],
+        live: "https://lending-saas.vercel.app/",
+        github: "https://github.com/f1erfly94/lending-saas"
+    },
+    {
+        num: '02',
+        category: 'Restaurant Landing Page',
+        title: 'EMBER — Bistro & Wine Landing Page',
+        description:
+            '✅ Built a fast, animated landing page for a fictional bistro & wine concept.\n' +
+            '✅ Hero slider, menu, gallery, and a table-booking form with date/time pickers.\n' +
+            '✅ Full UA/EN localization with a dark, editorial-style design.\n' +
+            '✅ Tuned for performance: Lighthouse 99+ desktop, ~90 mobile.',
+        stack: [{name: "Next.js"}, {name: "Tailwind CSS"}, {name: "TypeScript"}, {name: "Motion"}],
+        images: ['/assets/work/Ember-landing.png'],
+        live: "https://landing-page-eight-theta-57.vercel.app/",
+        github: "https://github.com/f1erfly94/landing-page"
+    },
+    {
+        num: '03',
+        category: 'Full-Stack Product',
+        title: 'Cook Galaxy — Recipe & Meal-Planning App',
+        description:
+            '✅ Full-stack recipe manager: save recipes, import from a photo or link, plan weekly menus.\n' +
+            '✅ AI features (Gemini): photo/screenshot recipe import and "what can I cook from my fridge" suggestions.\n' +
+            '✅ Subscriptions with recurring billing, plus a companion mobile app sharing the same backend.\n' +
+            '✅ Built and maintained as an ongoing product: auth, moderation, notifications, PDF export, and more.',
+        stack: [{name: "Next.js"}, {name: "TypeScript"}, {name: "Prisma"}, {name: "PostgreSQL"}, {name: "Tailwind CSS"}],
+        images: ['/assets/work/Cook-Galaxy.png'],
+        live: "https://cook-galaxy.vercel.app/",
+        github: "https://github.com/f1erfly94/cook-galaxy"
+    },
+    {
+        num: '04',
+        category: 'Data Dashboard',
+        title: 'Crypto Dashboard',
+        description:
+            '✅ Real-time cryptocurrency price tracker for Bitcoin and Solana.\n' +
+            '✅ Interactive dual-axis price chart for the last 24 hours.\n' +
+            '✅ Clean, data-dense dark UI focused on at-a-glance readability.\n' +
+            '✅ Built with the Next.js App Router and Recharts.',
+        stack: [{name: "Next.js"}, {name: "TypeScript"}, {name: "Tailwind CSS"}, {name: "Recharts"}],
+        images: ['/assets/work/Crypto-dashboard.png'],
+        live: "https://crypto-ape-peach.vercel.app/",
+        github: "https://github.com/f1erfly94/crypto-ape"
+    },
+    {
+        num: '05',
         category: 'Frontend & Design',
         title: 'Scrap Metal and Recycling Website',
         description:
@@ -28,7 +84,7 @@ const projects = [
         github: "https://github.com/f1erfly94/Scrap-metal"
     },
     {
-        num: '02',
+        num: '06',
         category: 'Frontend & Design',
         title: 'Music Web App',
         description:
@@ -67,9 +123,14 @@ const Work = () => {
                             <div className="text-8xl leading-none font-extrabold text-transparent text-outline">
                                 {project.num}
                             </div>
-                            <h2 className="text-[42px] font-bold leading-none text-white hover:text-accent transition-all duration-500 capitalize">
-                                {project.category}
-                            </h2>
+                            <div className="flex flex-col gap-2">
+                                <div className="text-accent text-lg uppercase tracking-[2px]">
+                                    {project.category}
+                                </div>
+                                <h2 className="text-[32px] xl:text-[42px] font-bold leading-tight text-white hover:text-accent transition-all duration-500">
+                                    {project.title}
+                                </h2>
+                            </div>
                             <div className="text-white/60 whitespace-pre-line">{project.description}</div>
                             <div className="text-center sm:text-left">
                                 <ul className="flex flex-wrap justify-center sm:justify-start gap-2 sm:gap-4">
@@ -97,19 +158,21 @@ const Work = () => {
                                         </Tooltip>
                                     </TooltipProvider>
                                 </Link>
-                                <Link href={project.github} target="_blank" rel="noopener noreferrer">
-                                    <TooltipProvider delayDuration={100}>
-                                        <Tooltip>
-                                            <TooltipTrigger
-                                                className="w-[70px] h-[70px] rounded-full bg-white/5 flex justify-center items-center group">
-                                                <BsGithub className="text-white text-3xl group-hover:text-accent"/>
-                                            </TooltipTrigger>
-                                            <TooltipContent>
-                                                <p>Github repository</p>
-                                            </TooltipContent>
-                                        </Tooltip>
-                                    </TooltipProvider>
-                                </Link>
+                                {project.github && (
+                                    <Link href={project.github} target="_blank" rel="noopener noreferrer">
+                                        <TooltipProvider delayDuration={100}>
+                                            <Tooltip>
+                                                <TooltipTrigger
+                                                    className="w-[70px] h-[70px] rounded-full bg-white/5 flex justify-center items-center group">
+                                                    <BsGithub className="text-white text-3xl group-hover:text-accent"/>
+                                                </TooltipTrigger>
+                                                <TooltipContent>
+                                                    <p>Github repository</p>
+                                                </TooltipContent>
+                                            </Tooltip>
+                                        </TooltipProvider>
+                                    </Link>
+                                )}
                             </div>
                         </div>
                     </div>
