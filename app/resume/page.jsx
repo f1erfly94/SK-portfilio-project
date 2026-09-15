@@ -15,7 +15,7 @@ const about = {
     info: [
         {fieldName: "Name:", fieldValue: " Serhii Kuznetsov"},
         {fieldName: "Phone:", fieldValue: " +38 (067) 715-75-91", link: "tel:+380677157591"},
-        {fieldName: "Experience:", fieldValue: " 3 Years"},
+        {fieldName: "Experience:", fieldValue: " 4 Years"},
         {fieldName: "Telegram:", fieldValue: " Serhii_Kuznetsov05", link: "https://t.me/Serhii_Kuznetsov05"},
         {fieldName: "Open to work:", fieldValue: " Yes"},
         {fieldName: "Languages:", fieldValue: " Ukrainian, English"},
@@ -29,7 +29,35 @@ const experience = {
     title: 'My experience',
     description: "Skilled Front-End Developer with expertise in building responsive, user-friendly interfaces.",
     items: [
-        {company: "Peiko", position: "Front-End Developer", duration: "2022-2024",}
+        {
+            company: "Amazon Agency",
+            link: null,
+            position: "Front-End Developer",
+            duration: "2025-2026",
+            stack: ["React 19", "TypeScript", "Tailwind CSS v4", "Chart.js", "TanStack Query", "Vite", "Playwright", "Vitest", "Claude", "ChatGPT"],
+            bullets: [
+                "Built front-end for automation tools that streamline Amazon ad campaign management across multiple client accounts",
+                "Improved Core Web Vitals (LCP, CLS, INP) on client dashboards — achieved measurably faster perceived load times through code splitting, lazy loading, and image optimization",
+                "Used Claude and ChatGPT to generate campaign performance summaries and ad copy suggestions integrated directly in the dashboard UI",
+                "Created interactive data-rich components — campaign charts, KPI tables, real-time budget trackers — using Chart.js and custom React hooks",
+                "Integrated Amazon Advertising and Product APIs; ensured WCAG 2.1 AA accessibility and full cross-browser compatibility",
+                "Wrote end-to-end test suites with Playwright covering critical dashboard flows, and unit/component tests with Vitest to prevent regressions across releases",
+            ],
+        },
+        {
+            company: "Peiko",
+            link: "https://peiko.space/",
+            position: "Front-End Developer",
+            duration: "2022-2024",
+            bullets: [
+                "Managed application state and integrated RESTful APIs",
+                "Developed and enhanced software functionality and services",
+                "Added new features, improved existing ones, and fixed bugs",
+                "Collaborated with team members and cross-functional teams",
+                "Took part in code reviews and contributed via Git",
+                "Participated in estimations and meetings",
+            ],
+        },
     ]
 };
 
@@ -71,15 +99,8 @@ const skills = {
         {icon: <FaFigma/>, name: 'Figma'},
     ]
 };
-const text = `Managed application state and integrated RESTful APIs
-Developed and enhanced software functionality and services
-Added new features, improved existing ones, and fixed bugs
-Collaborated with team members and cross-functional teams
-Took part in code reviews and contributed via Git
-Participated in estimations and meetings`;
 
 const Resume = () => {
-    const items = text.split('\n');
     return (
         <motion.div
             initial={{opacity: 0}}
@@ -116,16 +137,28 @@ const Resume = () => {
                                                     <span className="w-[6px] h-[6px] rounded-full bg-accent"></span>
                                                     <p className="text-accent">{item.duration} </p>
                                                     <p className="text-white/60">
-                                                        - <a href="https://peiko.space/" target="_blank"
-                                                             rel="noopener noreferrer" className="underline">
-                                                        {item.company}
-                                                    </a>
+                                                        - {item.link ? (
+                                                        <a href={item.link} target="_blank"
+                                                           rel="noopener noreferrer" className="underline">
+                                                            {item.company}
+                                                        </a>
+                                                    ) : item.company}
                                                     </p>
                                                 </div>
                                                 <h3 className="text-xl max-w-[260px] min-h-[30px] text-center lg:text-left">{item.position}</h3>
-                                                <ul className="list-disc pl-5">
-                                                    {items.map((item, index) => (
-                                                        <li key={index}>{item}</li>
+                                                {item.stack && (
+                                                    <div className="flex flex-wrap gap-x-2 gap-y-1 justify-center lg:justify-start mb-1">
+                                                        {item.stack.map((tech, techIndex) => (
+                                                            <span key={techIndex}
+                                                                  className="text-xs text-accent/80 bg-accent/10 px-2 py-0.5 rounded">
+                                                                {tech}
+                                                            </span>
+                                                        ))}
+                                                    </div>
+                                                )}
+                                                <ul className="list-disc pl-5 text-left">
+                                                    {item.bullets.map((point, pointIndex) => (
+                                                        <li key={pointIndex}>{point}</li>
                                                     ))}
                                                 </ul>
                                             </li>
