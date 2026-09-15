@@ -53,7 +53,7 @@ const experience = {
             company: "Peiko",
             link: "https://peiko.space/",
             position: "Front-End Developer",
-            duration: "2024-2025",
+            duration: "2022-2024",
             stack: ["Next.js", "React", "TypeScript", "Zustand", "SCSS", "Framer Motion", "GraphQL", "Jest", "Vitest", "Git"],
             bullets: [
                 "Developed responsive and accessible web applications using React, Next.js, and TypeScript with a mobile-first approach",
