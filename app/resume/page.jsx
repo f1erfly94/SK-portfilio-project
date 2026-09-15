@@ -6,8 +6,13 @@ import {ScrollArea} from "@/components/ui/scroll-area";
 import {Tabs, TabsContent, TabsList, TabsTrigger} from "@/components/ui/tabs";
 import {Tooltip, TooltipContent, TooltipProvider, TooltipTrigger} from "@/components/ui/tooltip";
 import {FaHtml5, FaReact, FaFigma, FaJs, FaGithub, FaCss3Alt} from 'react-icons/fa';
-import {TbBrandPrisma} from "react-icons/tb";
-import {SiTypescript, SiRedux, SiTailwindcss, SiWebpack, SiNextdotjs} from "react-icons/si";
+import {TbBrandPrisma, TbBrandGit, TbTestPipe} from "react-icons/tb";
+import {
+    SiTypescript, SiRedux, SiTailwindcss, SiWebpack, SiNextdotjs,
+    SiSass, SiFramer, SiGraphql, SiJest, SiVitest, SiChartdotjs,
+    SiReactquery, SiVite, SiClaude, SiOpenai
+} from "react-icons/si";
+import {GiBearFace} from "react-icons/gi";
 
 const about = {
     title: "About me",
@@ -48,14 +53,15 @@ const experience = {
             company: "Peiko",
             link: "https://peiko.space/",
             position: "Front-End Developer",
-            duration: "2022-2024",
+            duration: "2024-2025",
+            stack: ["Next.js", "React", "TypeScript", "Zustand", "SCSS", "Framer Motion", "GraphQL", "Jest", "Vitest", "Git"],
             bullets: [
-                "Managed application state and integrated RESTful APIs",
-                "Developed and enhanced software functionality and services",
-                "Added new features, improved existing ones, and fixed bugs",
-                "Collaborated with team members and cross-functional teams",
-                "Took part in code reviews and contributed via Git",
-                "Participated in estimations and meetings",
+                "Developed responsive and accessible web applications using React, Next.js, and TypeScript with a mobile-first approach",
+                "Built reusable UI components and design systems with SCSS and Framer Motion, improving development consistency across projects",
+                "Implemented efficient state management using Zustand, optimizing application performance and scalability",
+                "Integrated REST and GraphQL APIs, ensuring seamless communication between front-end and back-end services",
+                "Collaborated closely with designers and back-end developers to deliver high-quality features and maintain code quality through peer reviews",
+                "Covered shared UI components and utility logic with Jest and Vitest unit tests, raising confidence in refactors and reducing regressions before release",
             ],
         },
     ]
@@ -97,6 +103,19 @@ const skills = {
         {icon: <SiTailwindcss/>, name: 'Tailwind CSS'},
         {icon: <TbBrandPrisma/>, name: 'Prisma'},
         {icon: <FaFigma/>, name: 'Figma'},
+        {icon: <TbBrandGit/>, name: 'Git'},
+        {icon: <SiSass/>, name: 'SCSS'},
+        {icon: <GiBearFace/>, name: 'Zustand'},
+        {icon: <SiFramer/>, name: 'Framer Motion'},
+        {icon: <SiGraphql/>, name: 'GraphQL'},
+        {icon: <SiJest/>, name: 'Jest'},
+        {icon: <SiVitest/>, name: 'Vitest'},
+        {icon: <TbTestPipe/>, name: 'Playwright'},
+        {icon: <SiChartdotjs/>, name: 'Chart.js'},
+        {icon: <SiReactquery/>, name: 'TanStack Query'},
+        {icon: <SiVite/>, name: 'Vite'},
+        {icon: <SiClaude/>, name: 'Claude'},
+        {icon: <SiOpenai/>, name: 'ChatGPT'},
     ]
 };
 
