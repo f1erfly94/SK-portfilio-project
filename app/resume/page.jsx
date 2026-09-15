@@ -35,21 +35,6 @@ const experience = {
     description: "Skilled Front-End Developer with expertise in building responsive, user-friendly interfaces.",
     items: [
         {
-            company: "Amazon Agency",
-            link: null,
-            position: "Front-End Developer",
-            duration: "2025-2026",
-            stack: ["React 19", "TypeScript", "Tailwind CSS v4", "Chart.js", "TanStack Query", "Vite", "Playwright", "Vitest", "Claude", "ChatGPT"],
-            bullets: [
-                "Built front-end for automation tools that streamline Amazon ad campaign management across multiple client accounts",
-                "Improved Core Web Vitals (LCP, CLS, INP) on client dashboards — achieved measurably faster perceived load times through code splitting, lazy loading, and image optimization",
-                "Used Claude and ChatGPT to generate campaign performance summaries and ad copy suggestions integrated directly in the dashboard UI",
-                "Created interactive data-rich components — campaign charts, KPI tables, real-time budget trackers — using Chart.js and custom React hooks",
-                "Integrated Amazon Advertising and Product APIs; ensured WCAG 2.1 AA accessibility and full cross-browser compatibility",
-                "Wrote end-to-end test suites with Playwright covering critical dashboard flows, and unit/component tests with Vitest to prevent regressions across releases",
-            ],
-        },
-        {
             company: "Peiko",
             link: "https://peiko.space/",
             position: "Front-End Developer",
@@ -62,6 +47,21 @@ const experience = {
                 "Integrated REST and GraphQL APIs, ensuring seamless communication between front-end and back-end services",
                 "Collaborated closely with designers and back-end developers to deliver high-quality features and maintain code quality through peer reviews",
                 "Covered shared UI components and utility logic with Jest and Vitest unit tests, raising confidence in refactors and reducing regressions before release",
+            ],
+        },
+        {
+            company: "Amazon Agency",
+            link: null,
+            position: "Front-End Developer",
+            duration: "2025-2026",
+            stack: ["React 19", "TypeScript", "Tailwind CSS v4", "Chart.js", "TanStack Query", "Vite", "Playwright", "Vitest", "Claude", "ChatGPT"],
+            bullets: [
+                "Built front-end for automation tools that streamline Amazon ad campaign management across multiple client accounts",
+                "Improved Core Web Vitals (LCP, CLS, INP) on client dashboards — achieved measurably faster perceived load times through code splitting, lazy loading, and image optimization",
+                "Used Claude and ChatGPT to generate campaign performance summaries and ad copy suggestions integrated directly in the dashboard UI",
+                "Created interactive data-rich components — campaign charts, KPI tables, real-time budget trackers — using Chart.js and custom React hooks",
+                "Integrated Amazon Advertising and Product APIs; ensured WCAG 2.1 AA accessibility and full cross-browser compatibility",
+                "Wrote end-to-end test suites with Playwright covering critical dashboard flows, and unit/component tests with Vitest to prevent regressions across releases",
             ],
         },
     ]
