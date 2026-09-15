@@ -7,9 +7,20 @@ export default {
         "./app/**/*.{js,ts,jsx,tsx,mdx}",
     ],
     theme: {
+        container: {
+            center: true,
+            padding: '15px',
+        },
         extend: {
             fontFamily: {
                 primary: "var(--font-jetbrainsMono)",
+            },
+            screens: {
+                // Lowered from the Tailwind default (1280px) so the desktop
+                // layout survives common laptop widths under browser zoom
+                // (e.g. a 1366px/1440px laptop at 110-125% zoom) instead of
+                // prematurely collapsing into the mobile/tablet layout.
+                xl: '1120px',
             },
             colors: {
                 background: 'hsl(var(--background))',
@@ -21,16 +32,6 @@ export default {
                 card: {
                     DEFAULT: 'hsl(var(--card))',
                     foreground: 'hsl(var(--card-foreground))'
-                },
-                container: {
-                    center: true,
-                    padding: '15px',
-                },
-                screen: {
-                  sm: '640px',
-                  md: '768px',
-                  lg: '960px',
-                  xl: '1200px'
                 },
                 popover: {
                     DEFAULT: 'hsl(var(--popover))',
