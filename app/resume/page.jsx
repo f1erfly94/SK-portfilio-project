@@ -82,7 +82,7 @@ const education = {
             degree: "Master's degree in Computer Sciences",
             duration: "2018-2019"
         },
-        {institution: "dev{education}", degree: "Programming Course Front-End", duration: "2019-2020"},
+        {institution: "dev{education}", degree: "Programming Course Front-End", duration: "2021-2022"},
         {institution: "Playtech University", degree: "Web Design UI/UX Beginner course", duration: "2024-2024"},
     ]
 };
