@@ -10,7 +10,7 @@ import Stats from "@/components/Stats";
 import {featuredProjects, projectNumber, projects} from "@/data/projects";
 import {profile} from "@/lib/site";
 
-const CV_PATH = "/assets/download/Kuznetsov_Serhii_CV.pdf";
+const CV_PATH = "/assets/download/Serhii_Kuznetsov_Resume.pdf";
 
 export default function Home() {
     return (
