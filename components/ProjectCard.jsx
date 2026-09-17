@@ -22,6 +22,7 @@ const ProjectCard = ({project, number, priority = false}) => (
                 fill
                 sizes="(max-width: 768px) 100vw, (max-width: 1120px) 50vw, 33vw"
                 priority={priority}
+                quality={92}
                 className="object-cover object-top transition-transform duration-400 ease-out-expo group-hover:scale-[1.04]"
             />
             <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-primary/80 via-transparent to-transparent" />

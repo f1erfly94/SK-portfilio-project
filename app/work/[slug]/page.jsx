@@ -91,6 +91,7 @@ export default async function CaseStudy({params}) {
                         alt={`${project.title} screenshot`}
                         fill
                         priority
+                        quality={92}
                         sizes="(max-width: 1120px) 100vw, 1120px"
                         className="object-cover object-top"
                     />
@@ -159,6 +160,7 @@ export default async function CaseStudy({params}) {
                                             src={shot.src}
                                             alt={shot.alt}
                                             fill
+                                            quality={92}
                                             sizes="(max-width: 768px) 50vw, 25vw"
                                             className={shot.portrait ? "object-contain" : "object-cover object-top"}
                                         />
