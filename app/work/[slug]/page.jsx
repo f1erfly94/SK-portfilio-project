@@ -68,6 +68,9 @@ export default async function CaseStudy({params}) {
                             <BsArrowUpRight className="text-xs"/>
                         </Link>
                     )}
+                    {!project.live && !project.github && project.linkNote && (
+                        <p className="font-mono text-sm text-white/40">{project.linkNote}</p>
+                    )}
                     {project.github && (
                         <Link
                             href={project.github}
@@ -138,16 +141,26 @@ export default async function CaseStudy({params}) {
                     </section>
 
                     {study.gallery && (
-                        <section className="mt-20 grid gap-6 md:grid-cols-3">
+                        <section
+                            className={`mt-20 grid gap-6 ${
+                                study.gallery.some((shot) => shot.portrait)
+                                    ? "grid-cols-2 md:grid-cols-4"
+                                    : "md:grid-cols-3"
+                            }`}
+                        >
                             {study.gallery.map((shot, index) => (
                                 <Reveal key={shot.src} delay={index * 0.06}>
-                                    <div className="relative aspect-[16/10] overflow-hidden rounded-xl border border-line bg-black/40">
+                                    <div
+                                        className={`relative overflow-hidden rounded-xl border border-line bg-black/40 ${
+                                            shot.portrait ? "aspect-[9/19]" : "aspect-[16/10]"
+                                        }`}
+                                    >
                                         <Image
                                             src={shot.src}
                                             alt={shot.alt}
                                             fill
-                                            sizes="(max-width: 768px) 100vw, 33vw"
-                                            className="object-cover object-top"
+                                            sizes="(max-width: 768px) 50vw, 25vw"
+                                            className={shot.portrait ? "object-contain" : "object-cover object-top"}
                                         />
                                     </div>
                                 </Reveal>
