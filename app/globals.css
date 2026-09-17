@@ -17,7 +17,6 @@
             linear-gradient(to right, rgba(255, 255, 255, 0.022) 1px, transparent 1px),
             linear-gradient(to bottom, rgba(255, 255, 255, 0.022) 1px, transparent 1px);
         background-size: 100% 100%, 100% 100%, 5rem 5rem, 5rem 5rem;
-        background-attachment: fixed;
     }
 
     h1, h2, h3, h4 {
