@@ -1,7 +1,6 @@
 "use client";
 
 import React from 'react';
-import {motion} from "framer-motion";
 import {ScrollArea} from "@/components/ui/scroll-area";
 import {Tabs, TabsContent, TabsList, TabsTrigger} from "@/components/ui/tabs";
 import {Tooltip, TooltipContent, TooltipProvider, TooltipTrigger} from "@/components/ui/tooltip";
@@ -121,12 +120,7 @@ const skills = {
 
 const Resume = () => {
     return (
-        <motion.div
-            initial={{opacity: 0}}
-            animate={{
-                opacity: 1,
-                transition: {duration: 0.4, ease: "easeIn"},
-            }}
+        <div
             className="min-h-[80vh] flex items-start justify-center py-12 xl:py-24 "
         >
             <div className="container mx-auto">
@@ -266,7 +260,7 @@ const Resume = () => {
                     </div>
                 </Tabs>
             </div>
-        </motion.div>
+        </div>
     );
 };
 

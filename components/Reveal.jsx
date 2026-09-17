@@ -1,25 +1,35 @@
 "use client";
 
-import {motion, useReducedMotion} from "framer-motion";
+import {useRef} from "react";
+import {motion, useInView, useReducedMotion} from "framer-motion";
 
 /**
  * Reveals its children once they scroll into view.
  *
- * One component for the whole site, so every section enters the same way — and
- * with reduced motion it simply renders, no transform, no delay.
+ * Driven by `useInView` plus an explicit `animate` target rather than
+ * `whileInView`: the visible state is then ordinary React state, so an animation
+ * interrupted by a page change cannot leave the section parked at `opacity: 0`.
  */
 const Reveal = ({children, delay = 0, y = 24, className, as = "div"}) => {
     const reduced = useReducedMotion();
+    const ref = useRef(null);
+    const inView = useInView(ref, {once: true, margin: "-80px"});
     const MotionTag = motion[as] ?? motion.div;
 
-    if (reduced) return <MotionTag className={className}>{children}</MotionTag>;
+    if (reduced) {
+        return (
+            <MotionTag ref={ref} className={className}>
+                {children}
+            </MotionTag>
+        );
+    }
 
     return (
         <MotionTag
+            ref={ref}
             className={className}
             initial={{opacity: 0, y}}
-            whileInView={{opacity: 1, y: 0}}
-            viewport={{once: true, margin: "-80px"}}
+            animate={inView ? {opacity: 1, y: 0} : {opacity: 0, y}}
             transition={{duration: 0.6, delay, ease: [0.16, 1, 0.3, 1]}}
         >
             {children}
