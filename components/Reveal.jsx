@@ -10,10 +10,10 @@ import {motion, useInView, useReducedMotion} from "framer-motion";
  * `whileInView`: the visible state is then ordinary React state, so an animation
  * interrupted by a page change cannot leave the section parked at `opacity: 0`.
  */
-const Reveal = ({children, delay = 0, y = 24, className, as = "div"}) => {
+const Reveal = ({children, delay = 0, y = 10, className, as = "div"}) => {
     const reduced = useReducedMotion();
     const ref = useRef(null);
-    const inView = useInView(ref, {once: true, margin: "-80px"});
+    const inView = useInView(ref, {once: true, margin: "0px 0px 140px 0px"});
     const MotionTag = motion[as] ?? motion.div;
 
     if (reduced) {
@@ -30,7 +30,7 @@ const Reveal = ({children, delay = 0, y = 24, className, as = "div"}) => {
             className={className}
             initial={{opacity: 0, y}}
             animate={inView ? {opacity: 1, y: 0} : {opacity: 0, y}}
-            transition={{duration: 0.6, delay, ease: [0.16, 1, 0.3, 1]}}
+            transition={{duration: 0.32, delay, ease: [0.16, 1, 0.3, 1]}}
         >
             {children}
         </MotionTag>

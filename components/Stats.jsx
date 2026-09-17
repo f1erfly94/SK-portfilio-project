@@ -14,10 +14,10 @@ const Stats = () => (
     <section className="container mx-auto">
         <div className="grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-line bg-line xl:grid-cols-4">
             {stats.map((item, index) => (
-                <Reveal key={item.text} delay={index * 0.06} className="bg-primary/80 p-6 xl:p-8">
+                <Reveal key={item.text} delay={index * 0.03} className="bg-primary/80 p-6 xl:p-8">
                     <CountUp
                         end={item.num}
-                        duration={2.4}
+                        duration={1.1}
                         enableScrollSpy
                         scrollSpyOnce
                         className="font-display text-4xl font-semibold text-white xl:text-5xl"

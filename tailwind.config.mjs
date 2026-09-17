@@ -85,7 +85,7 @@ export default {
             },
             animation: {
                 marquee: 'marquee var(--marquee-duration, 38s) linear infinite',
-                rise: 'rise 0.7s cubic-bezier(0.16, 1, 0.3, 1) both',
+                rise: 'rise 0.45s cubic-bezier(0.16, 1, 0.3, 1) both',
             },
             borderRadius: {
                 lg: 'var(--radius)',
