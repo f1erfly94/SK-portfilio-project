@@ -76,7 +76,7 @@ const Contacts = () => {
             initial={{opacity: 0}}
             animate={{
                 opacity: 1,
-                transition: {delay: 2.4, duration: 0.4, ease: "easeInOut"},
+                transition: {duration: 0.4, ease: "easeInOut"},
             }}
             className="py-6 mr-7 ml-7"
         >

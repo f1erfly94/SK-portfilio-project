@@ -8,9 +8,9 @@ import {useState} from "react";
 
 const links = [
     {name: 'home', path: '/'},
+    {name: 'work', path: '/work'},
     {name: 'services', path: '/services'},
     {name: 'resume', path: '/resume'},
-    {name: 'work', path: '/work'},
     {name: 'Hire Me', path: '/contacts'},
 ];
 
@@ -24,7 +24,7 @@ const MobileNav = () => {
 
     return (
         <Sheet open={open} onOpenChange={setOpen}>
-            <SheetTrigger className="flex justify-between items-center">
+            <SheetTrigger aria-label="Open navigation menu" className="flex justify-between items-center">
                 <CiMenuFries className="text-[32px] text-accent"/>
             </SheetTrigger>
             <SheetContent className="flex flex-col">

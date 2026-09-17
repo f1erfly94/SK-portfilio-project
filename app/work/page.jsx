@@ -1,214 +1,151 @@
 "use client";
 
-import React, {useState} from 'react';
-import {motion} from 'framer-motion';
-
-import {Swiper, SwiperSlide} from 'swiper/react';
-import "swiper/css";
-
-import {BsArrowUpRight, BsGithub} from 'react-icons/bs';
-import {Tooltip, TooltipContent, TooltipProvider, TooltipTrigger} from "@/components/ui/tooltip";
-import Link from "next/link";
+import {useMemo, useState} from "react";
 import Image from "next/image";
-import WorkSliderBtns from "@/components/ui/WorkSliderBtns";
+import Link from "next/link";
+import {AnimatePresence, motion} from "framer-motion";
+import {BsArrowUpRight, BsGithub} from "react-icons/bs";
 
-const projects = [
-    {
-        num: '01',
-        category: 'SaaS Landing Page',
-        title: 'Lumora — AI Analytics Landing Page',
-        description:
-            '✅ Designed and built an animated SaaS landing page for an AI-powered product-analytics platform.\n' +
-            '✅ Live churn/retention chart mock, feature grid, pricing tiers, and testimonials.\n' +
-            '✅ Full UA/EN localization with a language switcher.\n' +
-            '✅ Fully responsive, dark-themed UI with smooth entrance animations.',
-        stack: [{name: "Next.js"}, {name: "Tailwind CSS"}, {name: "TypeScript"}, {name: "HTML 5"}],
-        images: ['/assets/work/Lumora-lending-saas.png'],
-        live: "https://lending-saas.vercel.app/",
-        github: "https://github.com/f1erfly94/lending-saas"
-    },
-    {
-        num: '02',
-        category: 'Restaurant Landing Page',
-        title: 'EMBER — Bistro & Wine Landing Page',
-        description:
-            '✅ Built a fast, animated landing page for a fictional bistro & wine concept.\n' +
-            '✅ Hero slider, menu, gallery, and a table-booking form with date/time pickers.\n' +
-            '✅ Full UA/EN localization with a dark, editorial-style design.\n' +
-            '✅ Tuned for performance: Lighthouse 99+ desktop, ~90 mobile.',
-        stack: [{name: "Next.js"}, {name: "Tailwind CSS"}, {name: "TypeScript"}, {name: "Motion"}],
-        images: ['/assets/work/Ember-landing.png'],
-        live: "https://landing-page-eight-theta-57.vercel.app/",
-        github: "https://github.com/f1erfly94/landing-page"
-    },
-    {
-        num: '03',
-        category: 'Full-Stack Product',
-        title: 'Cook Galaxy — Recipe & Meal-Planning App',
-        description:
-            '✅ Full-stack recipe manager: save recipes, import from a photo or link, plan weekly menus.\n' +
-            '✅ AI features (Gemini): photo/screenshot recipe import and "what can I cook from my fridge" suggestions.\n' +
-            '✅ Subscriptions with recurring billing, plus a companion mobile app sharing the same backend.\n' +
-            '✅ Built and maintained as an ongoing product: auth, moderation, notifications, PDF export, and more.',
-        stack: [{name: "Next.js"}, {name: "TypeScript"}, {name: "Prisma"}, {name: "PostgreSQL"}, {name: "Tailwind CSS"}],
-        images: ['/assets/work/Cook-Galaxy.png'],
-        live: "https://cook-galaxy.vercel.app/",
-        github: "https://github.com/f1erfly94/cook-galaxy"
-    },
-    {
-        num: '04',
-        category: 'Data Dashboard',
-        title: 'Crypto Dashboard',
-        description:
-            '✅ Real-time cryptocurrency price tracker for Bitcoin and Solana.\n' +
-            '✅ Interactive dual-axis price chart for the last 24 hours.\n' +
-            '✅ Clean, data-dense dark UI focused on at-a-glance readability.\n' +
-            '✅ Built with the Next.js App Router and Recharts.',
-        stack: [{name: "Next.js"}, {name: "TypeScript"}, {name: "Tailwind CSS"}, {name: "Recharts"}],
-        images: ['/assets/work/Crypto-dashboard.png'],
-        live: "https://crypto-ape-peach.vercel.app/",
-        github: "https://github.com/f1erfly94/crypto-ape"
-    },
-    {
-        num: '05',
-        category: 'Frontend & Design',
-        title: 'Scrap Metal and Recycling Website',
-        description:
-            '✅ Developed a modern and SEO-optimized website for a scrap metal and recycling company.\n' +
-            '✅ Implemented a smooth navigation experience.\n' +
-            '✅ Added contact forms with Telegram integration for quick customer inquiries.\n' +
-            '✅ The site ensures responsiveness, fast performance, and a professional design.',
-        stack: [{name: "Next.js"}, {name: "Tailwind CSS"}, {name: "TypeScript"}, {name: "HTML 5"}],
-        images: ['/assets/work/Scrap-metal.png'],
-        live: "https://scrap-metal-ten.vercel.app/",
-        github: "https://github.com/f1erfly94/Scrap-metal"
-    },
-    {
-        num: '06',
-        category: 'Frontend & Design',
-        title: 'Music Web App',
-        description:
-            '✅ Developed a dynamic fan website dedicated to Linkin Park, featuring an interactive discography, album pages.\n' +
-            '✅ Integrated Spotify API for real-time album and song data.\n' +
-            '✅ Added smooth animations, a responsive design, and a modern UI using Next.js and Tailwind CSS.\n' +
-            '✅ Implemented a parallax effect and audio player.',
-        stack: [{name: "Next.js"}, {name: "Tailwind CSS"}, {name: "TypeScript"}, {name: "HTML 5"}],
-        images: ['/assets/work/LP.png'],
-        live: "https://music-web-app-rho.vercel.app/",
-        github: "https://github.com/f1erfly94/music-web-app"
-    },
-];
+import ProjectCard from "@/components/ProjectCard";
+import Reveal from "@/components/Reveal";
+import {Dialog, DialogContent, DialogDescription, DialogTitle} from "@/components/ui/dialog";
+import {categories, projectNumber, projects} from "@/data/projects";
 
 const Work = () => {
-    const [project, setProject] = useState(projects[0]);
+    const [filter, setFilter] = useState("All");
+    const [selected, setSelected] = useState(null);
 
-    const handleSliceChange = (swiper) => {
-        setProject(projects[swiper.activeIndex]);
-    };
+    const visible = useMemo(
+        () => (filter === "All" ? projects : projects.filter((item) => item.category === filter)),
+        [filter],
+    );
 
     return (
-        <motion.section
-            initial={{opacity: 0}}
-            animate={{
-                opacity: 1,
-                transition: {delay: 2.4, duration: 0.4, ease: "easeIn"},
-            }}
-            className="min-h-[80vh] flex flex-col justify-center py-12 xl:px-0"
-        >
-            <div className="container mx-auto px-4 ">
-                <div className="flex flex-col xl:flex-row xl:gap-[30px]">
-                    <div
-                        className="w-full xl:w-[50%] xl:h-[460px] flex flex-col xl:justify-between order-2 xl:order-none">
-                        <div className="flex flex-col gap-[30px] h-[50%]">
-                            <div className="text-8xl leading-none font-extrabold text-transparent text-outline">
-                                {project.num}
+        <section className="container mx-auto pb-24 pt-6 xl:pt-10">
+            <Reveal>
+                <p className="label">Work</p>
+                <h1 className="h1 mt-4">Projects</h1>
+                <p className="mt-5 max-w-2xl text-white/60">
+                    Everything here is live or open source. Commercial work sits next to things I built
+                    to learn something specific — the case notes say which is which.
+                </p>
+            </Reveal>
+
+            <Reveal delay={0.1} className="mt-10 flex flex-wrap gap-3">
+                {categories.map((category) => {
+                    const active = category === filter;
+                    return (
+                        <button
+                            key={category}
+                            type="button"
+                            onClick={() => setFilter(category)}
+                            aria-pressed={active}
+                            className={`rounded-full border px-5 py-2 font-mono text-sm transition-colors duration-300 ${
+                                active
+                                    ? "border-accent bg-accent text-primary"
+                                    : "border-line text-white/60 hover:border-accent/50 hover:text-white"
+                            }`}
+                        >
+                            {category}
+                        </button>
+                    );
+                })}
+            </Reveal>
+
+            <motion.div layout className="mt-12 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+                <AnimatePresence mode="popLayout">
+                    {visible.map((project, index) => (
+                        <motion.div
+                            key={project.slug}
+                            layout
+                            initial={{opacity: 0, scale: 0.96}}
+                            animate={{opacity: 1, scale: 1}}
+                            exit={{opacity: 0, scale: 0.96}}
+                            transition={{duration: 0.35, ease: [0.16, 1, 0.3, 1]}}
+                        >
+                            <ProjectCard
+                                project={project}
+                                number={projectNumber(projects.indexOf(project))}
+                                priority={index < 3}
+                                onDetails={setSelected}
+                            />
+                        </motion.div>
+                    ))}
+                </AnimatePresence>
+            </motion.div>
+
+            <Dialog open={Boolean(selected)} onOpenChange={(open) => !open && setSelected(null)}>
+                <DialogContent>
+                    {selected && (
+                        <>
+                            <div className="relative aspect-[16/9] w-full overflow-hidden rounded-t-2xl border-b border-line">
+                                <Image
+                                    src={selected.image}
+                                    alt={`${selected.title} screenshot`}
+                                    fill
+                                    sizes="768px"
+                                    className="object-cover object-top"
+                                />
                             </div>
-                            <div className="flex flex-col gap-2">
-                                <div className="text-accent text-lg uppercase tracking-[2px]">
-                                    {project.category}
+
+                            <div className="flex flex-col gap-5 p-6 xl:p-8">
+                                <div className="flex items-center justify-between gap-4">
+                                    <span className="label text-accent">{selected.category}</span>
+                                    <span className="label">{selected.year}</span>
                                 </div>
-                                <h2 className="text-[32px] xl:text-[42px] font-bold leading-tight text-white hover:text-accent transition-all duration-500">
-                                    {project.title}
-                                </h2>
-                            </div>
-                            <div className="text-white/60 whitespace-pre-line">{project.description}</div>
-                            <div className="text-center sm:text-left">
-                                <ul className="flex flex-wrap justify-center sm:justify-start gap-2 sm:gap-4">
-                                    {project.stack.map((item, index) => (
-                                        <li key={index}
-                                            className="text-lg sm:text-xl text-accent hover:scale-110 transition-transform">
-                                            {item.name}{index !== project.stack.length - 1 && ","}
+
+                                <DialogTitle>{selected.title}</DialogTitle>
+                                <DialogDescription>{selected.summary}</DialogDescription>
+
+                                <ul className="flex flex-col gap-3">
+                                    {selected.highlights.map((item) => (
+                                        <li key={item} className="flex gap-3 text-sm leading-relaxed text-white/70">
+                                            <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-accent"/>
+                                            {item}
                                         </li>
                                     ))}
                                 </ul>
+
+                                <ul className="flex flex-wrap gap-2">
+                                    {selected.stack.map((item) => (
+                                        <li
+                                            key={item}
+                                            className="rounded-full border border-line px-3 py-1 font-mono text-[11px] text-white/70"
+                                        >
+                                            {item}
+                                        </li>
+                                    ))}
+                                </ul>
+
+                                <div className="flex flex-wrap items-center gap-3 border-t border-line pt-5">
+                                    {selected.live && (
+                                        <Link
+                                            href={selected.live}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="group inline-flex items-center gap-2 rounded-full bg-accent px-6 py-3 font-mono text-sm text-primary transition-transform duration-300 hover:-translate-y-0.5"
+                                        >
+                                            Open live site
+                                            <BsArrowUpRight className="text-xs"/>
+                                        </Link>
+                                    )}
+                                    {selected.github && (
+                                        <Link
+                                            href={selected.github}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="inline-flex items-center gap-2 rounded-full border border-line px-6 py-3 font-mono text-sm text-white transition-colors duration-300 hover:border-accent hover:text-accent"
+                                        >
+                                            <BsGithub/> Source
+                                        </Link>
+                                    )}
+                                </div>
                             </div>
-                            <div className="border border-white/20"/>
-                            <div className="flex items-center gap-4">
-                                <Link href={project.live} target="_blank" rel="noopener noreferrer">
-                                    <TooltipProvider delayDuration={100}>
-                                        <Tooltip>
-                                            <TooltipTrigger
-                                                className="w-[70px] h-[70px] rounded-full bg-white/5 flex justify-center items-center group">
-                                                <BsArrowUpRight
-                                                    className="text-white text-3xl group-hover:text-accent"/>
-                                            </TooltipTrigger>
-                                            <TooltipContent>
-                                                <p>Live project</p>
-                                            </TooltipContent>
-                                        </Tooltip>
-                                    </TooltipProvider>
-                                </Link>
-                                {project.github && (
-                                    <Link href={project.github} target="_blank" rel="noopener noreferrer">
-                                        <TooltipProvider delayDuration={100}>
-                                            <Tooltip>
-                                                <TooltipTrigger
-                                                    className="w-[70px] h-[70px] rounded-full bg-white/5 flex justify-center items-center group">
-                                                    <BsGithub className="text-white text-3xl group-hover:text-accent"/>
-                                                </TooltipTrigger>
-                                                <TooltipContent>
-                                                    <p>Github repository</p>
-                                                </TooltipContent>
-                                            </Tooltip>
-                                        </TooltipProvider>
-                                    </Link>
-                                )}
-                            </div>
-                        </div>
-                    </div>
-                    <div className="w-full xl:w-[50%]">
-                        <Swiper
-                            spaceBetween={30}
-                            slidesPerView={1}
-                            className="xl:h-[520px] mb-12"
-                            onSlideChange={handleSliceChange}
-                        >
-                            {projects.map((project, index) => (
-                                <SwiperSlide key={index} className="w-full">
-                                    <div
-                                        className="h-[460px] relative group flex justify-center items-center bg-pink-50/20">
-                                        <div className="absolute top-0 bottom-0 w-full h-full bg-black/10 z-10">
-                                        </div>
-                                        <div className="relative w-full h-full">
-                                            <Image
-                                                src={project.images[0]}
-                                                fill
-                                                className="object-cover"
-                                                alt="Project image"
-                                            />
-                                        </div>
-                                    </div>
-                                </SwiperSlide>
-                            ))}
-                            <WorkSliderBtns
-                                containerStyles="flex gap-2 absolute right-0 bottom-[calc(50%-22px)] xl:bottom-0 z-20 w-full justify-between xl:w-max xl:justify-none"
-                                btnStyles="bg-accent hover:bg-accent-hover text-primary text-[22px] w-[44px] h-[44px] flex justify-center items-center transition-all"
-                            />
-                        </Swiper>
-                    </div>
-                </div>
-            </div>
-        </motion.section>
+                        </>
+                    )}
+                </DialogContent>
+            </Dialog>
+        </section>
     );
 };
 

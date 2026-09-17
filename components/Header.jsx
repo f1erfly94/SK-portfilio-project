@@ -1,30 +1,41 @@
-'use client';
+"use client";
 
-import React from 'react';
-import Link from 'next/link';
+import {useEffect, useState} from "react";
+import Link from "next/link";
 import NextImage from "next/image";
 import Nav from "@/components/Nav";
-import {Button} from "@/components/ui/button";
 import MobileNav from "@/components/MobileNav";
+import {Button} from "@/components/ui/button";
 
 const Header = () => {
+    const [scrolled, setScrolled] = useState(false);
+
+    useEffect(() => {
+        // The bar only grows a border and a blur once the page has moved, so the
+        // hero starts clean.
+        const onScroll = () => setScrolled(window.scrollY > 12);
+        onScroll();
+        window.addEventListener("scroll", onScroll, {passive: true});
+        return () => window.removeEventListener("scroll", onScroll);
+    }, []);
+
     return (
-        <header className="py-8 xl:py-12 ml-7 mr-7 text-white">
-            <div
-                className="container mx-auto flex justify-between items-center">
-                <Link href="/">
-                    <h1 className="text-4xl font-semibold flex items-center">
-                        <NextImage src="/assets/Logo.png" alt="Logo" width={80} height={80} />
-                    </h1>
+        <header
+            className={`sticky top-0 z-50 text-white transition-all duration-300 ${
+                scrolled ? "border-b border-line bg-primary/80 backdrop-blur-md" : "border-b border-transparent"
+            }`}
+        >
+            <div className="container mx-auto flex h-20 items-center justify-between gap-6">
+                <Link href="/" aria-label="Home" className="shrink-0">
+                    <NextImage src="/assets/Logo.png" alt="Serhii Kuznetsov" width={72} height={72} priority/>
                 </Link>
 
-                <div className="hidden xl:flex items-center gap-8 ">
+                <div className="hidden items-center gap-10 xl:flex">
                     <Nav/>
                     <Link href="/contacts">
-                        <Button variant="default"> Hire me</Button>
+                        <Button variant="default">Hire me</Button>
                     </Link>
                 </div>
-
 
                 <div className="xl:hidden">
                     <MobileNav/>

@@ -13,7 +13,12 @@ export default {
         },
         extend: {
             fontFamily: {
+                // Kept for anything still asking for it by name.
                 primary: "var(--font-jetbrainsMono)",
+                // Mono is the accent voice now — labels, numbers, nav — not body copy.
+                mono: ["var(--font-jetbrainsMono)", "ui-monospace", "monospace"],
+                sans: ["var(--font-inter)", "ui-sans-serif", "system-ui", "sans-serif"],
+                display: ["var(--font-spaceGrotesk)", "var(--font-inter)", "ui-sans-serif", "sans-serif"],
             },
             screens: {
                 // Lowered from the Tailwind default (1280px) so the desktop
@@ -28,7 +33,13 @@ export default {
                 primary: '#1c1c22',
                 accent: {
                     DEFAULT: '#00ff99',
+                    soft: 'rgba(0, 255, 153, 0.12)',
                 },
+                surface: {
+                    DEFAULT: '#202027',
+                    raised: '#26262f',
+                },
+                line: 'rgba(255, 255, 255, 0.10)',
                 card: {
                     DEFAULT: 'hsl(var(--card))',
                     foreground: 'hsl(var(--card-foreground))'
@@ -61,6 +72,20 @@ export default {
                     '4': 'hsl(var(--chart-4))',
                     '5': 'hsl(var(--chart-5))'
                 }
+            },
+            transitionTimingFunction: {
+                'out-expo': 'cubic-bezier(0.16, 1, 0.3, 1)',
+            },
+            keyframes: {
+                marquee: { to: { transform: 'translateX(-50%)' } },
+                rise: {
+                    from: { opacity: '0', transform: 'translateY(1.25rem)' },
+                    to: { opacity: '1', transform: 'none' },
+                },
+            },
+            animation: {
+                marquee: 'marquee var(--marquee-duration, 38s) linear infinite',
+                rise: 'rise 0.7s cubic-bezier(0.16, 1, 0.3, 1) both',
             },
             borderRadius: {
                 lg: 'var(--radius)',
