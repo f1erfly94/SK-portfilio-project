@@ -20,20 +20,20 @@ export default function Home() {
                     <div className="order-2 max-w-2xl text-center xl:order-none xl:text-left">
                         <p className="label animate-rise">{profile.role} · {profile.location}</p>
 
-                        <h1 className="h1 mt-5 animate-rise [animation-delay:80ms]">
+                        <h1 className="h1 mt-5 animate-rise [animation-delay:40ms]">
                             I build web apps
                             <br/>
                             that <span className="text-accent">ship</span>.
                         </h1>
 
-                        <p className="mx-auto mt-6 max-w-xl text-base leading-relaxed text-white/65 xl:mx-0 animate-rise [animation-delay:160ms]">
+                        <p className="mx-auto mt-6 max-w-xl text-base leading-relaxed text-white/65 xl:mx-0 animate-rise [animation-delay:80ms]">
                             I&apos;m {profile.name}, a frontend developer working in Next.js and TypeScript.
                             Lately that has meant a full-stack cooking product with AI recipe import,
                             subscriptions and its own mobile app — and a 3D keyboard landing page rendered
                             in WebGL without a single model file.
                         </p>
 
-                        <div className="mt-9 flex flex-col items-center gap-4 sm:flex-row xl:justify-start animate-rise [animation-delay:240ms]">
+                        <div className="mt-9 flex flex-col items-center gap-4 sm:flex-row xl:justify-start animate-rise [animation-delay:120ms]">
                             <Link
                                 href="/work"
                                 className="group inline-flex items-center gap-3 rounded-full bg-accent px-7 py-3.5 font-mono text-sm font-medium text-primary transition-transform duration-300 hover:-translate-y-0.5"
@@ -52,7 +52,7 @@ export default function Home() {
                             </a>
                         </div>
 
-                        <div className="mt-9 flex justify-center xl:justify-start animate-rise [animation-delay:320ms]">
+                        <div className="mt-9 flex justify-center xl:justify-start animate-rise [animation-delay:160ms]">
                             <Socials
                                 containerStyles="flex gap-4"
                                 iconStyles="w-11 h-11 text-lg border border-line rounded-full flex justify-center items-center text-white/70 hover:border-accent hover:text-accent hover:-translate-y-0.5 transition-all duration-300"
@@ -85,7 +85,7 @@ export default function Home() {
 
                 <div className="mt-10 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
                     {featuredProjects.map((project, index) => (
-                        <Reveal key={project.slug} delay={index * 0.08} className="h-full">
+                        <Reveal key={project.slug} delay={index * 0.04} className="h-full">
                             <ProjectCard
                                 project={project}
                                 number={projectNumber(projects.indexOf(project))}
