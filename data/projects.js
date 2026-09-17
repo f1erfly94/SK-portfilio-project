@@ -21,7 +21,7 @@ export const projects = [
         ],
         stack: ["Next.js", "TypeScript", "three.js", "React Three Fiber", "Tailwind CSS"],
         image: "/assets/work/Klyk-3d-keyboard.jpg",
-        live: null,
+        live: "https://klyk-3d-keyboard.vercel.app",
         github: "https://github.com/f1erfly94/klyk-3d-keyboard",
         featured: true,
     },
