@@ -8,7 +8,10 @@ import {profile, siteUrl} from "@/lib/site";
 
 const jetbrainsMono = JetBrains_Mono({
     subsets: ["latin"],
-    weight: ["300", "400", "500", "600", "700"],
+    // Only the weights the design actually uses: labels and nav at 400,
+    // buttons at 500. Shipping 300/600/700 as well meant three more font files
+    // parsed on every load with nothing to apply them to.
+    weight: ["400", "500"],
     variable: "--font-jetbrainsMono",
     display: "swap",
 });
