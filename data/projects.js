@@ -64,6 +64,28 @@ export const projects = [
         featured: true,
     },
     {
+        slug: "cook-galaxy-mobile",
+        category: "Mobile",
+        title: "Cook Galaxy — Mobile App",
+        year: "2026",
+        summary:
+            "The Expo app for Cook Galaxy: the same backend, the same account, in your hand at the stove.",
+        highlights: [
+            "One backend, two clients — every API route accepts either the web session cookie or a mobile bearer token, so a feature ships to both at once.",
+            "Recipe import from a photo or a TikTok, Instagram and YouTube link, with the AI parse running server-side.",
+            "Meal planner with a shopping list for any period, private per-recipe notes and AI nutrition estimates.",
+            "In-app purchases, Google Sign-In and push notifications; 26 screens, each one covered by tests.",
+        ],
+        stack: ["Expo", "React Native", "TypeScript", "RevenueCat", "Jest"],
+        image: "/assets/work/Cook-Galaxy-Mobile.jpg",
+        live: null,
+        github: null,
+        // Ships through the stores from a private repository, so there is nothing
+        // honest to link to — better to say that than to show a dead button.
+        linkNote: "Private repository",
+        featured: false,
+    },
+    {
         slug: "lumora",
         category: "Landing Page",
         title: "Lumora — AI Analytics Landing Page",

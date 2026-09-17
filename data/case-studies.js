@@ -127,6 +127,46 @@ export const caseStudies = {
         ],
     },
 
+    "cook-galaxy-mobile": {
+        role: "Solo — the app, and the backend it shares with the web",
+        problem:
+            "Cook Galaxy is used in a kitchen, and nobody carries a laptop to the stove. But shipping a mobile app usually means a second product: a second API, a second set of business rules, and two codebases that drift apart until a feature exists in one and not the other. I wanted the app to be a second client, not a second product.",
+        decisions: [
+            {
+                title: "The backend did not get a mobile branch",
+                body: "Every route accepts either the web session cookie or a mobile bearer token, resolved by the same helper. Nothing is implemented twice, and a feature shipped on the web is available in the app as soon as the screen exists — there is no 'mobile support' ticket per endpoint.",
+            },
+            {
+                title: "The expensive work stays on the server",
+                body: "Photo and link import send the image or URL to the API and get a parsed recipe back. The phone never talks to the AI provider, which keeps the key server-side, the cost gated by the same daily limits as the web, and the app small.",
+            },
+            {
+                title: "Every screen has a state for when things go wrong",
+                body: "All the list screens have a loading state, an empty state and an error state with a retry — plus pull-to-refresh. Half of them did not, and adding them was a deliberate pass rather than something bolted on after a bug report.",
+            },
+            {
+                title: "The upload that broke on an SDK upgrade",
+                body: "Expo SDK 57 routes global fetch through its own implementation, whose FormData converter rejects the classic React Native upload descriptor — the one every tutorial still shows. Photo upload broke silently on upgrade; the fix was to hand it a real file object from expo-file-system instead. The kind of failure you only find by running the thing on a device.",
+            },
+            {
+                title: "Not every web interaction survives the port",
+                body: "Reordering ingredients is drag-and-drop on the web. On a phone, inside a scrolling form, drag-and-drop fights the scroll and loses — so it became up and down buttons. The same feature, a different gesture, because the constraint is different.",
+            },
+        ],
+        measured: [
+            {value: "26", label: "screens", note: "every one with a test, including its error and retry states"},
+            {value: "743", label: "tests", note: "across 78 suites"},
+            {value: "1", label: "backend", note: "shared with the web app, route for route"},
+            {value: "0", label: "duplicated business rules", note: "limits, trials and subscriptions resolve server-side"},
+        ],
+        gallery: [
+            {src: "/assets/work/cook-galaxy-mobile/home.jpg", alt: "Home: recipe of the day and categories", portrait: true},
+            {src: "/assets/work/cook-galaxy-mobile/import.jpg", alt: "Recipe import from a link or a photo", portrait: true},
+            {src: "/assets/work/cook-galaxy-mobile/planner.jpg", alt: "Meal planner with a shopping list for the period", portrait: true},
+            {src: "/assets/work/cook-galaxy-mobile/recipe.jpg", alt: "Recipe: AI nutrition estimate and a private note", portrait: true},
+        ],
+    },
+
     lumora: {
         role: "Solo — design and build",
         problem:

@@ -77,7 +77,9 @@ const ProjectCard = ({project, number, priority = false}) => {
                             Live <BsArrowUpRight className="text-xs"/>
                         </Link>
                     ) : (
-                        <span className="font-mono text-sm text-white/35">Deploy pending</span>
+                        <span className="font-mono text-sm text-white/35">
+                            {project.linkNote ?? "Deploy pending"}
+                        </span>
                     )}
 
                     {project.github && (
