@@ -31,7 +31,7 @@ const ProjectCard = ({project, number, priority = false}) => {
                     className="object-cover object-top transition-transform duration-400 ease-out-expo group-hover:scale-[1.04]"
                 />
                 <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-primary/80 via-transparent to-transparent"/>
-                <span className="label absolute left-4 top-4 rounded-full border border-line bg-primary/80 px-3 py-1 text-white/70 backdrop-blur-sm">
+                <span className="label absolute left-4 top-4 rounded-full border border-line bg-primary/95 px-3 py-1 text-white/70">
                     {number}
                 </span>
             </div>

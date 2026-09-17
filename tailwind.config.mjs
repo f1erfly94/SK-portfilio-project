@@ -78,6 +78,10 @@ export default {
             },
             keyframes: {
                 marquee: { to: { transform: 'translateX(-50%)' } },
+                float: {
+                    '0%, 100%': { transform: 'translateY(0)' },
+                    '50%': { transform: 'translateY(-10px)' },
+                },
                 rise: {
                     from: { opacity: '0', transform: 'translateY(1.25rem)' },
                     to: { opacity: '1', transform: 'none' },
@@ -85,6 +89,7 @@ export default {
             },
             animation: {
                 marquee: 'marquee var(--marquee-duration, 38s) linear infinite',
+                float: 'float 7s ease-in-out infinite',
                 rise: 'rise 0.45s cubic-bezier(0.16, 1, 0.3, 1) both',
             },
             borderRadius: {
