@@ -17,7 +17,8 @@ const Stats = () => (
                 <Reveal key={item.text} delay={index * 0.03} className="bg-primary/80 p-6 xl:p-8">
                     <CountUp
                         end={item.num}
-                        duration={1.1}
+                        duration={2.2}
+                        delay={index * 0.15}
                         enableScrollSpy
                         scrollSpyOnce
                         className="font-display text-4xl font-semibold text-white xl:text-5xl"
