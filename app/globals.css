@@ -65,7 +65,7 @@
 
     /* The one card surface used by projects, services and stats. */
     .card {
-        @apply relative rounded-2xl border border-line bg-surface/70 backdrop-blur-sm transition-colors duration-300;
+        @apply relative rounded-2xl border border-line bg-surface/90 transition-colors duration-300;
     }
 
     .card-hover {

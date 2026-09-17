@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import {motion, useReducedMotion} from "framer-motion";
+import {cn} from "@/lib/utils";
 import {profile} from "@/lib/site";
 
 /**
@@ -27,10 +28,11 @@ const Photo = () => {
                 className="absolute -inset-6 rounded-[2.5rem] bg-accent/20 blur-3xl"
             />
 
-            <motion.div
-                animate={reduced ? undefined : {y: [0, -10, 0]}}
-                transition={{duration: 7, repeat: Infinity, ease: "easeInOut"}}
-                className="relative overflow-hidden rounded-[2rem] border border-line bg-gradient-to-b from-surface-raised to-primary"
+            <div
+                className={cn(
+                    "relative overflow-hidden rounded-[2rem] border border-line bg-gradient-to-b from-surface-raised to-primary",
+                    !reduced && "animate-float",
+                )}
             >
                 <div
                     aria-hidden="true"
@@ -53,14 +55,14 @@ const Photo = () => {
                     />
                 </div>
 
-                <div className="absolute left-4 top-4 flex items-center gap-2 rounded-full border border-line bg-primary/80 px-3 py-1.5 backdrop-blur-sm">
+                <div className="absolute left-4 top-4 flex items-center gap-2 rounded-full border border-line bg-primary/95 px-3 py-1.5">
                     <span className="relative flex h-2 w-2">
                         <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent opacity-60"/>
                         <span className="relative inline-flex h-2 w-2 rounded-full bg-accent"/>
                     </span>
                     <span className="font-mono text-[11px] text-white/80">Open to work</span>
                 </div>
-            </motion.div>
+            </div>
         </motion.div>
     );
 };
