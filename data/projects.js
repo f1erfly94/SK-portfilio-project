@@ -7,6 +7,25 @@
  */
 export const projects = [
     {
+        slug: "quorum",
+        category: "Real-time",
+        title: "Quorum — Planning Poker",
+        year: "2026",
+        summary:
+            "Estimation rooms where votes stay hidden on the server until the host reveals them.",
+        highlights: [
+            "Everyone picks a card and nobody sees anyone else’s until the reveal — the server strips the value, so there is nothing to find in the network tab.",
+            "Presence, host handover and reconnection are derived from the sockets the runtime holds, not from a list the server tries to keep in step.",
+            "Room state lives in a Cloudflare Durable Object — one object per room, no database, no cold starts.",
+            "Tested with two browsers driving the same room at once, because that is the only honest way to test a shared one.",
+        ],
+        stack: ["Next.js", "TypeScript", "Cloudflare Workers", "Durable Objects", "Tailwind CSS"],
+        image: "/assets/work/Quorum.jpg",
+        live: "https://quorum-planning-poker.vercel.app",
+        github: "https://github.com/f1erfly94/quorum-planning-poker",
+        featured: true,
+    },
+    {
         slug: "klyk",
         category: "3D / WebGL",
         title: "KLYK-65 — Interactive 3D Keyboard",
@@ -60,7 +79,7 @@ export const projects = [
         image: "/assets/work/Lumora-lending-saas.png",
         live: "https://lending-saas.vercel.app/",
         github: "https://github.com/f1erfly94/lending-saas",
-        featured: true,
+        featured: false,
     },
     {
         slug: "ember",

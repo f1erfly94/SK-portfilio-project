@@ -7,6 +7,49 @@
  * worse than no case study.
  */
 export const caseStudies = {
+    quorum: {
+        role: "Solo — protocol, worker, interface",
+        problem:
+            "Nothing in this portfolio showed the hardest thing a front-end developer does: keeping state in step between people. Landing pages and even a full product are, in the end, one browser talking to one server. Planning poker is small enough to finish and rich enough to be interesting — presence, authority, hidden state and reconnection, all in a domain anyone understands in ten seconds.",
+        decisions: [
+            {
+                title: "The server hides the votes, not the interface",
+                body: "The obvious implementation broadcasts every vote and hides them in the UI — one devtools panel and the round is over. Here the room strips the card value from everyone else's participant until the reveal, so a client that peeks finds nothing. The end-to-end test asserts on the page's HTML rather than on what is visible, because that is the claim being made.",
+            },
+            {
+                title: "Presence is the connection, not a list",
+                body: "Who is in the room comes from the sockets the runtime is actually holding, so there is no join/leave bookkeeping to drift out of step and a closed laptop cannot leave a ghost behind.",
+            },
+            {
+                title: "One Durable Object per room",
+                body: "The room id maps to an object, and that object is the room: no database, no shared table, no locking. Round state lives in its storage and per-person state rides on the socket, so the runtime can hibernate the object between messages and bring it back without dropping anyone.",
+            },
+            {
+                title: "Chosen over a managed realtime service",
+                body: "Free tiers that sleep after a week of inactivity make a poor portfolio demo — a recruiter opening a dead page learns the wrong thing. Durable Objects stay warm on the free plan, and writing the synchronisation myself is the part worth showing; handing it to a library would have removed the project's reason to exist.",
+            },
+            {
+                title: "Room codes you can read out on a call",
+                body: "The alphabet has no vowels, so a generated code cannot accidentally spell something, and none of the characters people confuse when dictating them: no 0/O, no 1/l/I.",
+            },
+            {
+                title: "Local green is not green",
+                body: "Two things passed locally and failed against the deployed worker. The test assumed the host would be whoever connected first — true over loopback, not over the internet, where the join messages arrive in whatever order they arrive. And it reused one room id, while a Durable Object keeps its state, so the second run walked into the first run's revealed round. Both were bugs in the test rather than the server, and only a real deployment surfaced them.",
+            },
+        ],
+        measured: [
+            {value: "2.5 KB", label: "worker, gzipped", note: "the whole synchronisation layer"},
+            {value: "15", label: "protocol checks", note: "two raw sockets against a real Durable Object"},
+            {value: "3", label: "two-browser tests", note: "one test driving both sides of the same room"},
+            {value: "0", label: "cold starts", note: "the room is awake whenever someone opens the link"},
+        ],
+        gallery: [
+            {src: "/assets/work/quorum/hidden.jpg", alt: "Before the reveal: your own card is visible, everyone else shows only a tick"},
+            {src: "/assets/work/quorum/landing.jpg", alt: "The landing page"},
+            {src: "/assets/work/quorum/mobile.jpg", alt: "A room on a phone"},
+        ],
+    },
+
     klyk: {
         role: "Solo — concept, design, build, deploy",
         problem:
