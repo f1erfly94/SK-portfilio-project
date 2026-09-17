@@ -1,30 +1,30 @@
 "use client";
 
-import {AnimatePresence, motion} from "framer-motion";
+import {motion} from "framer-motion";
 import {usePathname} from "next/navigation";
 
 /**
- * Page change: a short fade and lift.
+ * Page change: a short fade and lift on the way in.
  *
- * This replaced a full-screen "stairs" wipe that took about two seconds, which
- * every page then had to wait out before showing its own content — the reason
- * the old pages all animated in on a `delay: 2.4`.
+ * Deliberately no `AnimatePresence` and no exit animation. With `mode="wait"` the
+ * new page mounts only after the old one finishes fading out, and a second
+ * navigation that interrupts that fade leaves the wrapper stuck at `opacity: 0` —
+ * a full-height page you cannot see, with the header and footer still in place.
+ * Keying on the pathname re-runs the entrance instead, which cannot get stuck:
+ * the element is only ever animating towards being visible.
  */
 const PageTransition = ({children}) => {
     const pathname = usePathname();
 
     return (
-        <AnimatePresence mode="wait">
-            <motion.div
-                key={pathname}
-                initial={{opacity: 0, y: 12}}
-                animate={{opacity: 1, y: 0}}
-                exit={{opacity: 0, y: -8}}
-                transition={{duration: 0.35, ease: [0.16, 1, 0.3, 1]}}
-            >
-                {children}
-            </motion.div>
-        </AnimatePresence>
+        <motion.div
+            key={pathname}
+            initial={{opacity: 0, y: 12}}
+            animate={{opacity: 1, y: 0}}
+            transition={{duration: 0.35, ease: [0.16, 1, 0.3, 1]}}
+        >
+            {children}
+        </motion.div>
     );
 };
 

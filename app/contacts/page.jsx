@@ -8,7 +8,6 @@ import {Textarea} from "@/components/ui/textarea";
 import {
     FaPhoneAlt, FaEnvelope, FaMapMarkerAlt, FaTelegram
 } from "react-icons/fa";
-import {motion} from "framer-motion";
 
 const info = [
     {
@@ -72,12 +71,7 @@ const Contacts = () => {
     };
 
     return (
-        <motion.section
-            initial={{opacity: 0}}
-            animate={{
-                opacity: 1,
-                transition: {duration: 0.4, ease: "easeInOut"},
-            }}
+        <section
             className="py-6 mr-7 ml-7"
         >
             <div className="container mx-auto">
@@ -170,7 +164,7 @@ const Contacts = () => {
                     </div>
                 </div>
             </div>
-        </motion.section>
+        </section>
     );
 };
 
