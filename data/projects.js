@@ -138,5 +138,17 @@ export const projectNumber = (index) => String(index + 1).padStart(2, "0");
 
 export const featuredProjects = projects.filter((project) => project.featured);
 
+export const projectBySlug = (slug) => projects.find((project) => project.slug === slug) ?? null;
+
+/** Neighbours for the case-study footer, wrapping around the list. */
+export const projectNeighbours = (slug) => {
+    const index = projects.findIndex((project) => project.slug === slug);
+    if (index === -1) return {previous: null, next: null};
+    return {
+        previous: projects[(index - 1 + projects.length) % projects.length],
+        next: projects[(index + 1) % projects.length],
+    };
+};
+
 /** Filter chips on the work page, in the order they appear. */
 export const categories = ["All", ...new Set(projects.map((project) => project.category))];

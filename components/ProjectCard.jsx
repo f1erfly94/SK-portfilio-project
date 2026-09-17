@@ -12,7 +12,7 @@ import {BsArrowUpRight, BsGithub} from "react-icons/bs";
  * wide desktop captures, and the old `object-cover` on a tall box sliced the
  * left third off every one of them.
  */
-const ProjectCard = ({project, number, priority = false, onDetails}) => {
+const ProjectCard = ({project, number, priority = false}) => {
     const reduced = useReducedMotion();
 
     return (
@@ -60,15 +60,12 @@ const ProjectCard = ({project, number, priority = false, onDetails}) => {
                 </ul>
 
                 <div className="flex items-center gap-4 border-t border-line pt-4">
-                    {onDetails && (
-                        <button
-                            type="button"
-                            onClick={() => onDetails(project)}
-                            className="font-mono text-sm text-white transition-colors hover:text-accent"
-                        >
-                            Details
-                        </button>
-                    )}
+                    <Link
+                        href={"/work/" + project.slug}
+                        className="font-mono text-sm text-white transition-colors hover:text-accent"
+                    >
+                        Case study
+                    </Link>
 
                     {project.live ? (
                         <Link
