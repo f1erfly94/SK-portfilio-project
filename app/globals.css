@@ -3,27 +3,95 @@
 @tailwind utilities;
 
 @layer base {
+    :root {
+        --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
     body {
-        @apply font-primary bg-primary text-white leading-loose;
+        @apply bg-primary text-white font-sans antialiased;
+        /* Two soft lights and a faint engineering grid, so the page has depth
+           without a single image request. */
+        background-image:
+            radial-gradient(60rem 40rem at 78% -10%, rgba(0, 255, 153, 0.10), transparent 60%),
+            radial-gradient(50rem 36rem at 5% 8%, rgba(94, 132, 255, 0.08), transparent 55%),
+            linear-gradient(to right, rgba(255, 255, 255, 0.022) 1px, transparent 1px),
+            linear-gradient(to bottom, rgba(255, 255, 255, 0.022) 1px, transparent 1px);
+        background-size: 100% 100%, 100% 100%, 5rem 5rem, 5rem 5rem;
+        background-attachment: fixed;
+    }
+
+    h1, h2, h3, h4 {
+        @apply font-display tracking-tight;
     }
 
     .h1 {
-        @apply text-[48px] xl:text-[80px] leading-[1.1] font-semibold;
+        @apply font-display text-[44px] sm:text-[60px] xl:text-[76px] leading-[1.02] font-semibold tracking-tight;
     }
 
     .h2 {
-        @apply text-[36px] xl:text-[48px] leading-[1.1] font-semibold;
+        @apply font-display text-[32px] xl:text-[44px] leading-[1.08] font-semibold tracking-tight;
     }
 
     .h3 {
-        @apply text-[20px] xl:text-[24px] leading-[1.1] font-semibold;
+        @apply font-display text-[20px] xl:text-[24px] leading-tight font-semibold;
     }
 
     .text-outline {
-        -webkit-text-stroke: 1px #ffffff;
+        -webkit-text-stroke: 1px rgba(255, 255, 255, 0.35);
     }
 
     .text-outline-hover {
         -webkit-text-stroke: 1px #00ff99;
+    }
+
+    ::selection {
+        @apply bg-accent text-primary;
+    }
+
+    :focus-visible {
+        @apply outline-none ring-2 ring-accent ring-offset-2 ring-offset-primary rounded-sm;
+    }
+
+    /* Firefox keeps its own scrollbar colours unless told otherwise. */
+    html {
+        scrollbar-color: rgba(255, 255, 255, 0.18) transparent;
+    }
+}
+
+@layer components {
+    /* Small mono caption: section labels, project numbers, meta rows. */
+    .label {
+        @apply font-mono text-[11px] uppercase tracking-[0.2em] text-white/50;
+    }
+
+    /* The one card surface used by projects, services and stats. */
+    .card {
+        @apply relative rounded-2xl border border-line bg-surface/70 backdrop-blur-sm transition-colors duration-300;
+    }
+
+    .card-hover {
+        @apply hover:border-accent/40 hover:bg-surface-raised/80;
+    }
+
+    /* Thin gradient rule used between sections. */
+    .rule {
+        @apply h-px w-full bg-gradient-to-r from-transparent via-white/15 to-transparent;
+    }
+}
+
+@layer utilities {
+    .marquee-mask {
+        mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
     }
 }

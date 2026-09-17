@@ -1,57 +1,67 @@
 "use client";
 
-import React from 'react';
-import {motion} from "framer-motion";
 import Image from "next/image";
+import {motion, useReducedMotion} from "framer-motion";
+import {profile} from "@/lib/site";
 
+/**
+ * Portrait panel.
+ *
+ * Replaces the rotating dashed circle that ships with every copy of the template
+ * this site started from: a framed panel with a soft accent glow, a status chip,
+ * and a float slow enough to read as depth rather than decoration.
+ */
 const Photo = () => {
+    const reduced = useReducedMotion();
+
     return (
-        <div className="w-full h-full relative">
+        <motion.div
+            initial={{opacity: 0, scale: 0.96}}
+            animate={{opacity: 1, scale: 1}}
+            transition={{duration: 0.8, ease: [0.16, 1, 0.3, 1]}}
+            className="relative w-[300px] sm:w-[360px] xl:w-[440px]"
+        >
+            {/* Glow behind the panel. */}
+            <div
+                aria-hidden="true"
+                className="absolute -inset-6 rounded-[2.5rem] bg-accent/20 blur-3xl"
+            />
+
             <motion.div
-                initial={{opacity: 0}}
-                animate={{
-                    opacity: 1,
-                    transition: {delay: 2, duration: 0.4, ease: "easeInOut"},
-                }}
+                animate={reduced ? undefined : {y: [0, -10, 0]}}
+                transition={{duration: 7, repeat: Infinity, ease: "easeInOut"}}
+                className="relative overflow-hidden rounded-[2rem] border border-line bg-gradient-to-b from-surface-raised to-primary"
             >
-                <div className="w-[298px] h-[298px] xl:w-[498px] xl:h-[498px] absolute">
+                <div
+                    aria-hidden="true"
+                    className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-accent/25 to-transparent"
+                />
+
+                <div className="relative aspect-[4/5] w-full">
+                    <div
+                        aria-hidden="true"
+                        className="absolute inset-x-0 bottom-0 z-10 h-24 bg-gradient-to-t from-primary via-primary/70 to-transparent"
+                    />
                     <Image
                         src="/assets/photo.png"
-                        priority
-                        quality={100}
+                        alt={`${profile.name}, ${profile.role}`}
                         fill
-                        alt="photo"
-                        className="object-contain"
+                        priority
+                        quality={95}
+                        sizes="(max-width: 768px) 300px, 440px"
+                        className="object-contain object-bottom"
                     />
                 </div>
-                <motion.svg
-                    className="w-[300px] xl:w-[506px] xl:h-[506px]"
-                    fill="transparent"
-                    viewBox="0 0 506 506"
-                    xmlns="http://www.w3.org/2000/svg"
-                >
-                    <motion.circle
-                        cx="250"
-                        cy="253"
-                        r="250"
-                        stroke="#00ff99"
-                        strokeWidth="5"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        initial={{strokeDasharray: "24 10 0 0"}}
-                        animate={{
-                            strokeDasharray: ["15 120 25 25", "16 25 92 72", "4 250 22 22"],
-                            rotate: [120, 360],
-                        }}
-                        transition={{
-                            duration: 20,
-                            repeat: Infinity,
-                            repeatType: "reverse",
-                        }}
-                    />
-                </motion.svg>
+
+                <div className="absolute left-4 top-4 flex items-center gap-2 rounded-full border border-line bg-primary/80 px-3 py-1.5 backdrop-blur-sm">
+                    <span className="relative flex h-2 w-2">
+                        <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent opacity-60"/>
+                        <span className="relative inline-flex h-2 w-2 rounded-full bg-accent"/>
+                    </span>
+                    <span className="font-mono text-[11px] text-white/80">Open to work</span>
+                </div>
             </motion.div>
-        </div>
+        </motion.div>
     );
 };
 
