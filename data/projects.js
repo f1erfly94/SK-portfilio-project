@@ -7,6 +7,25 @@
  */
 export const projects = [
     {
+        slug: "accessible-combobox",
+        category: "Accessibility",
+        title: "Accessible Combobox — a real comparison",
+        year: "2026",
+        summary:
+            "Two comboboxes with identical markup, searching 8,000 items — one keyboard-operable, one not.",
+        highlights: [
+            "The WAI-ARIA combobox pattern, virtualized: with 8,000 options only a slice is ever in the DOM, but aria-activedescendant always points at one that actually exists.",
+            "A deliberately naive version sits right next to it — same look, `useState` and `<div onClick>` rows, zero ARIA — to make the gap concrete instead of theoretical.",
+            "Honest about automated tooling: an axe-core scan of the naive version, opened, catches exactly one real violation, not dozens. The rest is what the keyboard-only tests catch.",
+            "The tests caught two real bugs before this got called \"accessible\": an infinite loop in the dataset's PRNG, and the announcement effect going silent on zero-result queries.",
+        ],
+        stack: ["Next.js", "TypeScript", "Tailwind CSS", "Playwright", "axe-core"],
+        image: "/assets/work/Accessible-Combobox.png",
+        live: "https://accessible-combobox.vercel.app",
+        github: "https://github.com/f1erfly94/accessible-combobox",
+        featured: false,
+    },
+    {
         slug: "quorum",
         category: "Real-time",
         title: "Quorum — Planning Poker",
