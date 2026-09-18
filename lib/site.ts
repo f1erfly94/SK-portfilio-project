@@ -1,5 +1,5 @@
 /** Canonical URL, used by metadata, the sitemap and the OG image. */
-const fromEnv = (value) => (value ? value : undefined);
+const fromEnv = (value: string | undefined) => (value ? value : undefined);
 
 export const siteUrl =
     fromEnv(process.env.NEXT_PUBLIC_SITE_URL) ??

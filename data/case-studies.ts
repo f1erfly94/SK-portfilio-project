@@ -6,7 +6,16 @@
  * summary and highlights, because a case study padded with invented detail is
  * worse than no case study.
  */
-export const caseStudies = {
+export interface CaseStudy {
+    role: string;
+    problem: string;
+    decisions: {title: string; body: string}[];
+    measured: {value: string; label: string; note: string}[];
+    /** Optional: not every project has extra screenshots. */
+    gallery?: {src: string; alt: string; portrait?: boolean}[];
+}
+
+export const caseStudies: Record<string, CaseStudy> = {
     "accessible-combobox": {
         role: "Solo — implementation, testing, tooling",
         problem:
@@ -254,4 +263,4 @@ export const caseStudies = {
     },
 };
 
-export const caseStudyFor = (slug) => caseStudies[slug] ?? null;
+export const caseStudyFor = (slug: string): CaseStudy | null => caseStudies[slug] ?? null;

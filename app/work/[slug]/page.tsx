@@ -1,3 +1,4 @@
+import type {Metadata} from "next";
 import Image from "next/image";
 import Link from "next/link";
 import {notFound} from "next/navigation";
@@ -9,7 +10,9 @@ import {projectBySlug, projectNeighbours, projectNumber, projects} from "@/data/
 
 export const generateStaticParams = () => projects.map((project) => ({slug: project.slug}));
 
-export async function generateMetadata({params}) {
+type PageProps = {params: Promise<{slug: string}>};
+
+export async function generateMetadata({params}: PageProps): Promise<Metadata> {
     const {slug} = await params;
     const project = projectBySlug(slug);
     if (!project) return {};
@@ -26,7 +29,7 @@ export async function generateMetadata({params}) {
     };
 }
 
-export default async function CaseStudy({params}) {
+export default async function CaseStudy({params}: PageProps) {
     const {slug} = await params;
     const project = projectBySlug(slug);
     if (!project) notFound();

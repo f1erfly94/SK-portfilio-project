@@ -1,6 +1,6 @@
 "use client";
 
-import {useRef} from "react";
+import {useRef, type ReactNode} from "react";
 import {motion, useInView, useReducedMotion} from "framer-motion";
 
 /**
@@ -10,11 +10,19 @@ import {motion, useInView, useReducedMotion} from "framer-motion";
  * `whileInView`: the visible state is then ordinary React state, so an animation
  * interrupted by a page change cannot leave the section parked at `opacity: 0`.
  */
-const Reveal = ({children, delay = 0, y = 10, className, as = "div"}) => {
+interface RevealProps {
+    children: ReactNode;
+    delay?: number;
+    y?: number;
+    className?: string;
+    as?: "div" | "li";
+}
+
+const Reveal = ({children, delay = 0, y = 10, className, as = "div"}: RevealProps) => {
     const reduced = useReducedMotion();
-    const ref = useRef(null);
+    const ref = useRef<HTMLDivElement>(null);
     const inView = useInView(ref, {once: true, margin: "0px 0px 140px 0px"});
-    const MotionTag = motion[as] ?? motion.div;
+    const MotionTag = motion[as] as typeof motion.div;
 
     if (reduced) {
         return (

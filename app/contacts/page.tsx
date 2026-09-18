@@ -35,21 +35,28 @@ const info = [
     },
 ];
 
-const Contacts = () => {
-    const [errors, setErrors] = useState({});
+type FormField = "firstName" | "lastName" | "email" | "phone" | "message";
+type FormErrors = Partial<Record<FormField, string>>;
 
-    const handleSubmit = (e) => {
+const Contacts = () => {
+    const [errors, setErrors] = useState<FormErrors>({});
+
+    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        const formData = {
-            firstName: e.target.firstName.value,
-            lastName: e.target.lastName.value,
-            email: e.target.email.value,
-            phone: e.target.phone.value,
-            message: e.target.message.value,
+        const form = e.currentTarget;
+        const read = (name: FormField) =>
+            (form.elements.namedItem(name) as HTMLInputElement | HTMLTextAreaElement).value;
+
+        const formData: Record<FormField, string> = {
+            firstName: read("firstName"),
+            lastName: read("lastName"),
+            email: read("email"),
+            phone: read("phone"),
+            message: read("message"),
         };
 
-        const validationErrors = {};
+        const validationErrors: FormErrors = {};
 
 
         if (!formData.firstName) validationErrors.firstName = "First name is required.";
@@ -66,7 +73,7 @@ const Contacts = () => {
             setErrors(validationErrors);
         } else {
             setErrors({});
-            e.target.submit();
+            form.submit();
         }
     };
 
@@ -83,7 +90,7 @@ const Contacts = () => {
                             onSubmit={handleSubmit}
                             className="flex flex-col gap-6 p-10 bg-[#27272c] rounded-xl"
                         >
-                            <h3 className="text-4xl text-accent">Let's work together</h3>
+                            <h3 className="text-4xl text-accent">Let&apos;s work together</h3>
                             <p className="text-white/60">Please fill out the form below to get in touch with me.</p>
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <Input

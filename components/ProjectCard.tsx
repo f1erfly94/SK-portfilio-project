@@ -2,6 +2,8 @@ import Image from "next/image";
 import Link from "next/link";
 import {BsArrowRight, BsArrowUpRight, BsGithub} from "react-icons/bs";
 
+import type {Project} from "@/data/projects";
+
 /**
  * One project.
  *
@@ -13,7 +15,13 @@ import {BsArrowRight, BsArrowUpRight, BsGithub} from "react-icons/bs";
  * wide desktop captures, and `object-cover` on a tall box sliced the left third
  * off every one of them.
  */
-const ProjectCard = ({project, number, priority = false}) => (
+interface ProjectCardProps {
+    project: Project;
+    number: string;
+    priority?: boolean;
+}
+
+const ProjectCard = ({project, number, priority = false}: ProjectCardProps) => (
     <article className="card card-hover group flex h-full flex-col overflow-hidden transition-transform duration-300 ease-out-expo hover:-translate-y-1.5">
         {/* Same destination as the "Case study" button below, so it is hidden from
             keyboard and screen-reader users to avoid a duplicate tab stop. */}
