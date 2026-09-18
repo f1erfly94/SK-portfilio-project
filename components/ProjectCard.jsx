@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import {BsArrowUpRight, BsGithub} from "react-icons/bs";
+import {BsArrowRight, BsArrowUpRight, BsGithub} from "react-icons/bs";
 
 /**
  * One project.
@@ -15,7 +15,14 @@ import {BsArrowUpRight, BsGithub} from "react-icons/bs";
  */
 const ProjectCard = ({project, number, priority = false}) => (
     <article className="card card-hover group flex h-full flex-col overflow-hidden transition-transform duration-300 ease-out-expo hover:-translate-y-1.5">
-        <div className="relative aspect-[16/10] overflow-hidden border-b border-line bg-black/40">
+        {/* Same destination as the "Case study" button below, so it is hidden from
+            keyboard and screen-reader users to avoid a duplicate tab stop. */}
+        <Link
+            href={`/work/${project.slug}`}
+            tabIndex={-1}
+            aria-hidden="true"
+            className="relative block aspect-[16/10] overflow-hidden border-b border-line bg-black/40"
+        >
             <Image
                 src={project.image}
                 alt={`${project.title} screenshot`}
@@ -29,7 +36,7 @@ const ProjectCard = ({project, number, priority = false}) => (
             <span className="label absolute left-4 top-4 rounded-full border border-line bg-primary/95 px-3 py-1 text-white/70">
                 {number}
             </span>
-        </div>
+        </Link>
 
         <div className="flex flex-1 flex-col gap-4 p-6">
             <div className="flex items-center justify-between gap-4">
@@ -57,9 +64,9 @@ const ProjectCard = ({project, number, priority = false}) => (
             <div className="flex items-center gap-4 border-t border-line pt-4">
                 <Link
                     href={`/work/${project.slug}`}
-                    className="font-mono text-sm text-white transition-colors hover:text-accent"
+                    className="inline-flex items-center gap-2 rounded-full bg-accent px-4 py-2 font-mono text-sm text-primary transition-transform duration-300 hover:-translate-y-0.5"
                 >
-                    Case study
+                    Case study <BsArrowRight className="text-xs" />
                 </Link>
 
                 {project.live ? (
