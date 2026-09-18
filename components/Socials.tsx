@@ -12,7 +12,12 @@ const socials = [
  * Icon-only links, so each one carries its own label — without it a screen reader
  * announces three links called "link".
  */
-const Socials = ({containerStyles, iconStyles}) => (
+interface SocialsProps {
+    containerStyles?: string;
+    iconStyles?: string;
+}
+
+const Socials = ({containerStyles, iconStyles}: SocialsProps) => (
     <div className={containerStyles}>
         {socials.map((item) => (
             <Link

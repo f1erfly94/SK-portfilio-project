@@ -1,4 +1,6 @@
+import type {Viewport} from "next";
 import {Inter, JetBrains_Mono, Space_Grotesk} from "next/font/google";
+import type {ReactNode} from "react";
 import "./globals.css";
 import Header from "@/components/Header";
 import PageTransition from "@/components/PageTransition";
@@ -55,12 +57,12 @@ export const metadata = {
     alternates: {canonical: "/"},
 };
 
-export const viewport = {
+export const viewport: Viewport = {
     themeColor: "#1c1c22",
     colorScheme: "dark",
 };
 
-export default function RootLayout({children}) {
+export default function RootLayout({children}: {children: ReactNode}) {
     return (
         <html lang="en">
         <body className={`${jetbrainsMono.variable} ${inter.variable} ${spaceGrotesk.variable}`}>

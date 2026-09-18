@@ -5,7 +5,23 @@
  * filters by `category`, so both read from this one list — a project can never
  * appear on one page with a stack or a link the other page does not have.
  */
-export const projects = [
+export interface Project {
+    slug: string;
+    category: string;
+    title: string;
+    year: string;
+    summary: string;
+    highlights: string[];
+    stack: string[];
+    image: string;
+    live: string | null;
+    github: string | null;
+    /** Shown instead of the Live link when there is nothing honest to link to. */
+    linkNote?: string;
+    featured: boolean;
+}
+
+export const projects: Project[] = [
     {
         slug: "accessible-combobox",
         category: "Accessibility",
@@ -194,14 +210,14 @@ export const projects = [
 ];
 
 /** Display number: "01" is the newest project. */
-export const projectNumber = (index) => String(index + 1).padStart(2, "0");
+export const projectNumber = (index: number) => String(index + 1).padStart(2, "0");
 
 export const featuredProjects = projects.filter((project) => project.featured);
 
-export const projectBySlug = (slug) => projects.find((project) => project.slug === slug) ?? null;
+export const projectBySlug = (slug: string): Project | null => projects.find((project) => project.slug === slug) ?? null;
 
 /** Neighbours for the case-study footer, wrapping around the list. */
-export const projectNeighbours = (slug) => {
+export const projectNeighbours = (slug: string): {previous: Project | null; next: Project | null} => {
     const index = projects.findIndex((project) => project.slug === slug);
     if (index === -1) return {previous: null, next: null};
     return {

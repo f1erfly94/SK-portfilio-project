@@ -1,6 +1,7 @@
 "use client";
 
 import {motion} from "framer-motion";
+import type {ReactNode} from "react";
 import {usePathname} from "next/navigation";
 
 /**
@@ -13,7 +14,7 @@ import {usePathname} from "next/navigation";
  * Keying on the pathname re-runs the entrance instead, which cannot get stuck:
  * the element is only ever animating towards being visible.
  */
-const PageTransition = ({children}) => {
+const PageTransition = ({children}: {children: ReactNode}) => {
     const pathname = usePathname();
 
     return (
