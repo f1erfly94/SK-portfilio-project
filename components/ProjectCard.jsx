@@ -61,10 +61,10 @@ const ProjectCard = ({project, number, priority = false}) => (
                 ))}
             </ul>
 
-            <div className="flex items-center gap-4 border-t border-line pt-4">
+            <div className="flex flex-wrap items-center gap-3 border-t border-line pt-4">
                 <Link
                     href={`/work/${project.slug}`}
-                    className="inline-flex items-center gap-2 rounded-full bg-accent px-4 py-2 font-mono text-sm text-primary transition-transform duration-300 hover:-translate-y-0.5"
+                    className="inline-flex items-center gap-1.5 rounded-full bg-accent px-3.5 py-2 font-mono text-sm text-primary transition-transform duration-300 hover:-translate-y-0.5"
                 >
                     Case study <BsArrowRight className="text-xs" />
                 </Link>
@@ -74,9 +74,16 @@ const ProjectCard = ({project, number, priority = false}) => (
                         href={project.live}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-2 font-mono text-sm text-white transition-colors hover:text-accent"
+                        className="group/live inline-flex items-center gap-1.5 rounded-full border border-accent/60 px-3.5 py-2 font-mono text-sm text-accent transition-colors duration-300 hover:bg-accent/10"
                     >
-                        Live <BsArrowUpRight className="text-xs" />
+                        {/* Pulsing "on air" dot: only transform + opacity animate, so it
+                            stays on the compositor; reduced-motion turns it off globally. */}
+                        <span className="relative flex h-2 w-2" aria-hidden="true">
+                            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent opacity-75" />
+                            <span className="relative inline-flex h-2 w-2 rounded-full bg-accent" />
+                        </span>
+                        Live
+                        <BsArrowUpRight className="text-xs transition-transform duration-300 group-hover/live:-translate-y-0.5 group-hover/live:translate-x-0.5" />
                     </Link>
                 ) : (
                     <span className="font-mono text-sm text-white/35">
