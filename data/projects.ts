@@ -18,7 +18,14 @@ export interface Project {
     github: string | null;
     /** Shown instead of the Live link when there is nothing honest to link to. */
     linkNote?: string;
+    /**
+     * Shown instead of the GitHub link when the repository is private: a link
+     * a visitor can only open to a 404 does more harm than no link at all.
+     */
+    sourceNote?: string;
     featured: boolean;
+    /** Older, smaller work: listed under "Earlier work" instead of in the grid. Keep these last. */
+    archived?: boolean;
 }
 
 export const projects: Project[] = [
@@ -76,7 +83,8 @@ export const projects: Project[] = [
         stack: ["Next.js", "TypeScript", "three.js", "React Three Fiber", "Tailwind CSS"],
         image: "/assets/work/Klyk-3d-keyboard.png",
         live: "https://klyk-3d-keyboard.vercel.app",
-        github: "https://github.com/f1erfly94/klyk-3d-keyboard",
+        github: null,
+        sourceNote: "Private repo",
         featured: true,
     },
     {
@@ -95,7 +103,8 @@ export const projects: Project[] = [
         stack: ["Next.js", "TypeScript", "Prisma", "PostgreSQL", "Tailwind CSS"],
         image: "/assets/work/Cook-Galaxy.jpg",
         live: "https://cook-galaxy.vercel.app/",
-        github: "https://github.com/f1erfly94/cook-galaxy",
+        github: null,
+        sourceNote: "Private repo",
         featured: true,
     },
     {
@@ -135,7 +144,8 @@ export const projects: Project[] = [
         stack: ["Next.js", "TypeScript", "Tailwind CSS", "Motion"],
         image: "/assets/work/Lumora-lending-saas.jpg",
         live: "https://lending-saas.vercel.app/",
-        github: "https://github.com/f1erfly94/lending-saas",
+        github: null,
+        sourceNote: "Private repo",
         featured: false,
     },
     {
@@ -153,24 +163,8 @@ export const projects: Project[] = [
         stack: ["Next.js", "TypeScript", "Tailwind CSS", "Motion"],
         image: "/assets/work/Ember-landing.jpg",
         live: "https://landing-page-eight-theta-57.vercel.app/",
-        github: "https://github.com/f1erfly94/landing-page",
-        featured: false,
-    },
-    {
-        slug: "crypto-dashboard",
-        category: "Data Dashboard",
-        title: "Crypto Dashboard",
-        year: "2025",
-        summary: "A real-time price tracker for Bitcoin and Solana with a dual-axis 24-hour chart.",
-        highlights: [
-            "Live prices with an interactive dual-axis chart for the last 24 hours.",
-            "A dense, quiet dark UI built for reading at a glance.",
-            "Next.js App Router with Recharts.",
-        ],
-        stack: ["Next.js", "TypeScript", "Tailwind CSS", "Recharts"],
-        image: "/assets/work/Crypto-dashboard.png",
-        live: "https://crypto-ape-peach.vercel.app/",
-        github: "https://github.com/f1erfly94/crypto-ape",
+        github: null,
+        sourceNote: "Private repo",
         featured: false,
     },
     {
@@ -187,8 +181,30 @@ export const projects: Project[] = [
         stack: ["Next.js", "TypeScript", "Tailwind CSS"],
         image: "/assets/work/Scrap-metal.jpg",
         live: "https://scrap-metal-ten.vercel.app/",
-        github: "https://github.com/f1erfly94/Scrap-metal",
+        github: null,
+        sourceNote: "Private repo",
         featured: false,
+    },
+
+    // Earlier work: kept on the site, but listed compactly under the grid rather
+    // than as full cards next to the projects that have case studies.
+    {
+        slug: "crypto-dashboard",
+        category: "Data Dashboard",
+        title: "Crypto Dashboard",
+        year: "2025",
+        summary: "A real-time price tracker for Bitcoin and Solana with a dual-axis 24-hour chart.",
+        highlights: [
+            "Live prices with an interactive dual-axis chart for the last 24 hours.",
+            "A dense, quiet dark UI built for reading at a glance.",
+            "Next.js App Router with Recharts.",
+        ],
+        stack: ["Next.js", "TypeScript", "Tailwind CSS", "Recharts"],
+        image: "/assets/work/Crypto-dashboard.png",
+        live: "https://crypto-ape-peach.vercel.app/",
+        github: "https://github.com/f1erfly94/crypto-ape",
+        featured: false,
+        archived: true,
     },
     {
         slug: "music-web-app",
@@ -206,6 +222,7 @@ export const projects: Project[] = [
         live: "https://music-web-app-rho.vercel.app/",
         github: "https://github.com/f1erfly94/music-web-app",
         featured: false,
+        archived: true,
     },
 ];
 
@@ -213,6 +230,11 @@ export const projects: Project[] = [
 export const projectNumber = (index: number) => String(index + 1).padStart(2, "0");
 
 export const featuredProjects = projects.filter((project) => project.featured);
+
+/** The grid on the work page; archived projects are listed separately below it. */
+export const currentProjects = projects.filter((project) => !project.archived);
+
+export const earlierProjects = projects.filter((project) => project.archived);
 
 export const projectBySlug = (slug: string): Project | null => projects.find((project) => project.slug === slug) ?? null;
 
@@ -227,4 +249,4 @@ export const projectNeighbours = (slug: string): {previous: Project | null; next
 };
 
 /** Filter chips on the work page, in the order they appear. */
-export const categories = ["All", ...new Set(projects.map((project) => project.category))];
+export const categories = ["All", ...new Set(currentProjects.map((project) => project.category))];

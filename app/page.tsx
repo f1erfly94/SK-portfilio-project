@@ -8,13 +8,31 @@ import Socials from "@/components/Socials";
 import StackMarquee from "@/components/StackMarquee";
 import Stats from "@/components/Stats";
 import {featuredProjects, projectNumber, projects} from "@/data/projects";
-import {profile} from "@/lib/site";
+import {profile, siteUrl} from "@/lib/site";
 
 const CV_PATH = "/assets/download/Serhii_Kuznetsov_Resume.pdf";
+
+/** Tells search engines this site is about a person, and which profiles are theirs. */
+const personJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    name: profile.name,
+    jobTitle: profile.role,
+    url: siteUrl,
+    email: `mailto:${profile.email}`,
+    sameAs: [profile.github, profile.linkedin, profile.telegram],
+    knowsAbout: ["Next.js", "React", "TypeScript", "Tailwind CSS", "three.js", "Playwright"],
+};
 
 export default function Home() {
     return (
         <div className="flex flex-col gap-24 pb-24 xl:gap-32">
+            <script
+                type="application/ld+json"
+                // Escaping "<" keeps a value from ever closing the script tag early.
+                dangerouslySetInnerHTML={{__html: JSON.stringify(personJsonLd).replace(/</g, "\\u003c")}}
+            />
+
             <section className="container mx-auto pt-6 xl:pt-10">
                 <div className="flex flex-col items-center gap-12 xl:flex-row xl:items-center xl:justify-between xl:gap-16">
                     <div className="order-2 max-w-2xl text-center xl:order-none xl:text-left">

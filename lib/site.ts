@@ -11,6 +11,8 @@ export const profile = {
     name: "Serhii Kuznetsov",
     role: "Frontend Developer",
     location: "Cherkasy, Ukraine",
+    /** Commercial experience, in whole years. The CV in public/assets/download has to say the same. */
+    yearsOfExperience: 4,
     /** Shown as the availability pill in the header and hero. */
     available: true,
     email: "serhii.kuznetsov05@gmail.com",
