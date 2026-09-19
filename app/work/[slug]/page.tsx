@@ -2,7 +2,7 @@ import type {Metadata} from "next";
 import Image from "next/image";
 import Link from "next/link";
 import {notFound} from "next/navigation";
-import {BsArrowLeft, BsArrowRight, BsArrowUpRight, BsGithub} from "react-icons/bs";
+import {BsArrowLeft, BsArrowRight, BsArrowUpRight, BsGithub, BsLock} from "react-icons/bs";
 
 import Reveal from "@/components/Reveal";
 import {caseStudyFor} from "@/data/case-studies";
@@ -83,6 +83,11 @@ export default async function CaseStudy({params}: PageProps) {
                         >
                             <BsGithub/> Source
                         </Link>
+                    )}
+                    {!project.github && project.sourceNote && (
+                        <p className="inline-flex items-center gap-2 font-mono text-sm text-white/40">
+                            <BsLock aria-hidden="true"/> {project.sourceNote}
+                        </p>
                     )}
                 </div>
             </Reveal>

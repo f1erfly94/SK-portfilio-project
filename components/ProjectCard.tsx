@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import {BsArrowRight, BsArrowUpRight, BsGithub} from "react-icons/bs";
+import {BsArrowRight, BsArrowUpRight, BsGithub, BsLock} from "react-icons/bs";
 
 import type {Project} from "@/data/projects";
 
@@ -109,6 +109,19 @@ const ProjectCard = ({project, number, priority = false}: ProjectCardProps) => (
                     >
                         <BsGithub />
                     </Link>
+                )}
+
+                {/* Same footprint as the GitHub button, so a card with a private
+                    repository keeps the same one-line footer; dashed and dimmed to
+                    read as "not a link". The case study spells the note out. */}
+                {!project.github && project.sourceNote && (
+                    <span
+                        title={project.sourceNote}
+                        className="ml-auto inline-flex h-9 w-9 items-center justify-center rounded-full border border-dashed border-line text-white/35"
+                    >
+                        <BsLock aria-hidden="true" />
+                        <span className="sr-only">{project.sourceNote}</span>
+                    </span>
                 )}
             </div>
         </div>
