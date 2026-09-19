@@ -45,8 +45,7 @@ export const projects: Project[] = [
         stack: ["React", "TypeScript", "Canvas 2D", "Cloudflare Workers", "Durable Objects"],
         image: "/assets/work/Tessera.png",
         live: "https://tessera.flytomars94.workers.dev",
-        github: null,
-        sourceNote: "Private repo",
+        github: "https://github.com/f1erfly94/tessera",
         featured: true,
     },
     {
