@@ -1,0 +1,107 @@
+The home page of this site has a row of animated counters. The first one says how many years I have
+been doing this. For anyone who scrolled past it and back, it said **0**.
+
+## Catching it
+
+A screenshot after load looked right, which is why it survived. What caught it was sampling the
+numbers over time while a script scrolled the production page with the mouse wheel, every 400 ms.
+The first counter read:
+
+```text
+4 → 4 → 4 → 4 → 4 → 0 → 0 → 0 → …
+```
+
+It counted up correctly, stayed correct while it was on screen, and dropped to zero the moment it
+scrolled out of view. The other three counters in the same row kept their values.
+
+## Two parts of one library, disagreeing
+
+The counters used `react-countup`, which is a React wrapper around `countup.js`. Each half had its
+own idea of when a counter should start.
+
+**The React half starts on mount.** Its `<CountUp>` component passes this to its hook:
+
+```js
+startOnMount: typeof children !== "function" || props.delay === 0,
+```
+
+Without render-prop children, that is always `true`: the counter starts when it mounts, after its
+`delay`. The first counter's delay was `index * 0.15` — zero — so it started immediately, while it
+was still below the fold.
+
+**The countup.js half starts on scroll.** With `enableScrollSpy`, every instance registers a scroll
+handler. Simplified from countup.js 2.8.0:
+
+```js
+if (inView && self.paused) {
+  self.paused = false;
+  setTimeout(() => self.start(), self.options.scrollSpyDelay);
+  if (self.options.scrollSpyOnce) self.once = true;
+} else if (outOfView && !self.paused) {
+  self.reset();
+}
+```
+
+Put the two together. By the time the first counter scrolled into view, the React half had already
+started it, so `self.paused` was `false`. The "in view" branch — the only place `once` gets set —
+never ran. So `scrollSpyOnce` never took effect, and when the counter left the viewport the
+"out of view" branch found a running counter and reset it to its start value: zero.
+
+The other three had a staggered delay and, in practice, escaped. I did not chase the exact
+interleaving that saved them, because the fix removes the question.
+
+## The fix: one source of truth for "visible"
+
+The page already had a mechanism for "this element has scrolled into view": the scroll reveals use
+Framer Motion's `useInView`. The library brought a second, independent one, and the bug lived in the
+gap between them. So the counter became a small component on the first mechanism:
+
+```tsx
+const CountUpNumber = ({end, delay = 0, className}: CountUpNumberProps) => {
+    const ref = useRef<HTMLSpanElement>(null);
+    const inView = useInView(ref, {once: true});
+    const reduced = useReducedMotion();
+
+    useEffect(() => {
+        const node = ref.current;
+        if (!node || !inView) return;
+
+        if (reduced) {
+            node.textContent = end.toLocaleString("en-US");
+            return;
+        }
+
+        const controls = animate(0, end, {
+            duration: 2.2,
+            delay,
+            ease: [0.16, 1, 0.3, 1],
+            onUpdate: (value) => {
+                node.textContent = Math.round(value).toLocaleString("en-US");
+            },
+        });
+        return () => controls.stop();
+    }, [inView, reduced, end, delay]);
+
+    return <span ref={ref} className={className}>0</span>;
+};
+```
+
+It starts once, when it is actually seen, and nothing can reset it. It writes straight to the DOM
+instead of re-rendering on every frame, respects reduced motion, and took two dependencies —
+`react-countup` and `countup.js` — out of the bundle.
+
+One follow-up: my first version started only when the number was 10% above the bottom of the
+screen. On a 1440 × 900 screen the counters already peek in at the bottom on load, so visitors saw
+a row of zeroes waiting for a scroll. Dropping the margin fixed that.
+
+## What I took from it
+
+- **Sample what the user sees over time.** A single snapshot after load said "4". The bug only
+  existed in the sequence.
+- **Two "is it visible?" mechanisms will disagree at the edges.** If your page already answers that
+  question, a dependency that answers it again is a second source of truth.
+- **Read the dependency.** The whole bug was about twenty lines in `node_modules`, and reading them
+  took less time than guessing.
+
+The component is
+[`components/CountUpNumber.tsx`](https://github.com/f1erfly94/SK-portfilio-project/blob/master/components/CountUpNumber.tsx).

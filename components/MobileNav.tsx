@@ -5,14 +5,9 @@ import {usePathname} from "next/navigation";
 import Link from 'next/link';
 import {Sheet, SheetContent, SheetTrigger, SheetHeader, SheetTitle} from "@/components/ui/sheet";
 import {useState} from "react";
+import {isActivePath, navLinks} from "@/lib/nav";
 
-const links = [
-    {name: 'home', path: '/'},
-    {name: 'work', path: '/work'},
-    {name: 'services', path: '/services'},
-    {name: 'resume', path: '/resume'},
-    {name: 'Hire Me', path: '/contacts'},
-];
+const links = [...navLinks, {name: "Hire Me", path: "/contacts"}];
 
 const MobileNav = () => {
     const pathname = usePathname();
@@ -33,9 +28,10 @@ const MobileNav = () => {
                 </SheetHeader>
                 <div className="mt-32 mb-40 text-center text-2xl">
                     <Link href="/" onClick={handleLinkClick}>
-                        <h1 className="text-4xl font-semibold">
+                        {/* Not an h1: the page underneath already has one. */}
+                        <p className="font-display text-4xl font-semibold">
                             Serhii<span className="text-accent">.</span>
-                        </h1>
+                        </p>
                     </Link>
                 </div>
                 <nav className="flex flex-col justify-between items-center gap-8">
@@ -44,7 +40,8 @@ const MobileNav = () => {
                             href={link.path}
                             key={link.path}
                             onClick={handleLinkClick}
-                            className={`${link.path === pathname ? "text-accent border-b-2 border-accent" : ""} text-xl capitalize hover:text-accent transition-all`}
+                            aria-current={link.path === pathname ? "page" : undefined}
+                            className={`${isActivePath(pathname, link.path) ? "text-accent border-b-2 border-accent" : ""} text-xl capitalize hover:text-accent transition-all`}
                         >
                             {link.name}
                         </Link>

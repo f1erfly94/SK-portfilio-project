@@ -1,12 +1,14 @@
 import Link from "next/link";
 import {BsArrowRight, BsDownload} from "react-icons/bs";
 
+import NoteList from "@/components/NoteList";
 import Photo from "@/components/Photo";
 import ProjectCard from "@/components/ProjectCard";
 import Reveal from "@/components/Reveal";
 import Socials from "@/components/Socials";
 import StackMarquee from "@/components/StackMarquee";
 import Stats from "@/components/Stats";
+import {notes} from "@/data/notes";
 import {featuredProjects, projectNumber, projects} from "@/data/projects";
 import {cvPath, profile, siteUrl} from "@/lib/site";
 
@@ -113,6 +115,26 @@ export default function Home() {
             </section>
 
             <StackMarquee/>
+
+            <section className="container mx-auto">
+                <Reveal className="flex flex-wrap items-end justify-between gap-6">
+                    <div>
+                        <p className="label">Notes</p>
+                        <h2 className="h2 mt-3">Bugs worth writing down</h2>
+                    </div>
+                    <Link
+                        href="/notes"
+                        className="group inline-flex items-center gap-2 font-mono text-sm text-white/70 transition-colors hover:text-accent"
+                    >
+                        All notes
+                        <BsArrowRight className="transition-transform duration-300 group-hover:translate-x-1"/>
+                    </Link>
+                </Reveal>
+
+                <div className="mt-10">
+                    <NoteList notes={notes.slice(0, 3)}/>
+                </div>
+            </section>
 
             <section className="container mx-auto">
                 <Reveal className="card overflow-hidden px-8 py-14 text-center xl:px-16">

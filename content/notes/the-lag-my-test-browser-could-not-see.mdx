@@ -1,0 +1,122 @@
+Right after I redesigned this site, scrolling it felt laggy. Not broken — just not smooth, on my own
+monitor. This is how I went looking for the cause, got a confident wrong answer twice, and what
+finally showed it.
+
+## First pass: a trace, and two fixes that were real
+
+I recorded a Chrome performance trace while the page scrolled programmatically, and counted every
+frame over 16.7 ms as a dropped one. Two things stood out:
+
+- the `body` had `background-attachment: fixed` on a layered gradient. A fixed background is tracked
+  against the viewport instead of the page, which can take scrolling off the browser's fast
+  compositing path;
+- the sticky header had `backdrop-blur-md`. A blur over an element that stays put while the content
+  underneath it moves has to be recalculated on every frame.
+
+Both went, and the header got a solid, slightly translucent background instead. Dropped frames fell
+from 1.5% to about 0.5–0.7%.
+
+The project cards had a `backdrop-blur-sm` of their own, and I kept it — on purpose. My reasoning: a
+card scrolls together with the page, so whatever is behind it moves with it and there is nothing to
+recompute. That reasoning is the villain of this note.
+
+## Second pass: the animations were slow, not the frames
+
+With half a percent of dropped frames, I decided frames were not the problem and looked at timing
+instead. I measured the share of scroll time during which something on screen was still easing in:
+**37%**. Reveals took 600 ms and started 80 px *after* a block had entered the screen — you were
+already looking at it when it began to appear.
+
+I halved the durations and made reveals start 140 px *before* the edge. The share dropped to 2%. A
+real improvement — and the site still did not feel smooth on my monitor.
+
+## Third pass: measuring the screen I actually use
+
+My monitor runs at 165 Hz. At that rate the budget for a frame is about 6 ms, not 16.7. And every
+measurement so far had come from headless Chrome, which renders at 60 fps whatever monitor the
+machine has. A 12 ms frame was "fine" in my traces and a missed refresh on the screen I was
+complaining about. The tool could not see the problem, so it kept agreeing with me.
+
+So I measured again in a real, headed Chrome window on the 165 Hz screen, scrolling with real
+mouse-wheel events — `page.mouse.wheel()` in Playwright, not `window.scrollTo`, which takes a
+different path through the browser. The idea is simple enough to sketch:
+
+```js
+// In the page: record the gap between consecutive frames while the test scrolls.
+const gaps = [];
+let last = performance.now();
+requestAnimationFrame(function tick(now) {
+  gaps.push(now - last);
+  last = now;
+  requestAnimationFrame(tick);
+});
+
+// At 165 Hz a refresh is ~6.06 ms, so anything over ~1.5 of them missed a vsync.
+const missedShare = () => gaps.filter((gap) => gap > 9).length / gaps.length;
+```
+
+Then I switched suspects off one at a time:
+
+<table>
+  <thead>
+    <tr>
+      <th>Variant</th>
+      <th>Missed vsyncs</th>
+      <th>Worst frame</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>As shipped</td>
+      <td>3.7%</td>
+      <td>146 ms</td>
+    </tr>
+    <tr>
+      <td>Without backdrop-blur</td>
+      <td>2.4%</td>
+      <td>12 ms</td>
+    </tr>
+    <tr>
+      <td>Without the infinite animations</td>
+      <td>3.5%</td>
+      <td>55 ms</td>
+    </tr>
+    <tr>
+      <td>Without the body gradient</td>
+      <td>3.6%</td>
+      <td>30 ms</td>
+    </tr>
+  </tbody>
+</table>
+
+The blur on the cards — the one I had decided was free — was the dominant cost. Chrome still moves an
+element with `backdrop-filter` onto its own surface and re-samples what is behind it while the page
+moves, even when both move together. Inside a 16.7 ms budget that cost hides; at 6 ms you can see it.
+
+The cards now use a more opaque surface (`bg-surface/90`): the same separation from the background,
+without the blur. While I was there, the floating portrait in the hero moved from a Framer Motion
+animation to CSS keyframes. An infinite JavaScript animation ticks on the main thread 165 times a
+second; a CSS one lives on the compositor.
+
+## What was left: loading, not scrolling
+
+After that, if I gave the page five seconds after load, not a single frame was missed at 165 Hz.
+What remained was the work of loading overlapping the first scroll — which is exactly the moment
+someone opens the page and starts scrolling straight away. So the last pass was about weight:
+
+- screenshots were served at their capture size although they are shown at 400–1120 px; about 3 MB
+  of images became about 600 KB;
+- the glow behind the portrait was a `blur(64px)` filter, re-rendered whenever the floating portrait
+  above it moved. It became a radial gradient;
+- the project cards, the stack marquee and the portrait panel became server components, with their
+  hover and float effects in plain CSS;
+- three font weights that nothing used were dropped.
+
+## What I took from it
+
+- **Measure on the hardware the complaint came from.** A 60 fps tool pointed at a 165 Hz problem does
+  not give you a small error. It gives you a confident wrong answer.
+- **"The compositor handles this for free" is a hypothesis, not a fact.** Switching the suspect off
+  and measuring settled it; reasoning about it had cost me two rounds.
+- **"It's laggy" can be three different problems.** Here it was slow animations, an expensive
+  filter, and load work landing on the first scroll — each with its own fix.
