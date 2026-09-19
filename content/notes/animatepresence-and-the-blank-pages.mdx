@@ -1,0 +1,94 @@
+Switch between sections of this site quickly, and sometimes the page came up empty: header and
+footer in place, the page the right height, and nothing in between. Reload, and it was fine. The
+kind of bug you can shrug off as a one-off — until you count it.
+
+## The code that did it
+
+The page transition was the textbook Framer Motion pattern: wrap the page in `AnimatePresence`, key
+it on the pathname, fade the old page out before the new one comes in.
+
+```tsx
+const PageTransition = ({children}) => {
+    const pathname = usePathname();
+
+    return (
+        <AnimatePresence mode="wait">
+            <motion.div
+                key={pathname}
+                initial={{opacity: 0, y: 12}}
+                animate={{opacity: 1, y: 0}}
+                exit={{opacity: 0, y: -8}}
+                transition={{duration: 0.35, ease: [0.16, 1, 0.3, 1]}}
+            >
+                {children}
+            </motion.div>
+        </AnimatePresence>
+    );
+};
+```
+
+`mode="wait"` means the new page mounts only after the old one has finished fading out. That is the
+whole point of it — and the whole problem. If another navigation arrives while that fade is still
+running, the wrapper can be left at `opacity: 0` with nothing scheduled to bring it back. In the App
+Router, where navigations are instant and the layout around the page never unmounts, that is easy
+to hit: click one link, change your mind, click another.
+
+## Counting it
+
+A bug that shows up "sometimes" needs a number before it gets a fix. I scripted 40 quick switches
+between sections against the production site and checked, after each one, whether the page was
+visible. **30 of the 40 ended on a blank page.**
+
+How you check matters. The obvious test — look for the page's text with `innerText` or a text
+locator — passes on every one of those blank pages, because the text *is* there. It is just
+transparent. What catches it is the computed opacity of the wrapper:
+
+```js
+// On a blank page this is "0", with all of the page's text still in the DOM.
+getComputedStyle(document.querySelector("#main > div")).opacity;
+```
+
+## The fix: only ever animate towards visible
+
+There is no exit animation any more. The page animates in, keyed on the pathname, and that is all:
+
+```tsx
+const PageTransition = ({children}: {children: ReactNode}) => {
+    const pathname = usePathname();
+
+    return (
+        <motion.div
+            key={pathname}
+            initial={{opacity: 0, y: 6}}
+            animate={{opacity: 1, y: 0}}
+            transition={{duration: 0.22, ease: [0.16, 1, 0.3, 1]}}
+        >
+            {children}
+        </motion.div>
+    );
+};
+```
+
+A new key remounts the wrapper and restarts the entrance. An interrupted entrance is simply replaced
+by the next one, and every animation that can run is heading towards `opacity: 1` — there is no
+state in which the page is waiting on something to finish before it may appear.
+
+Two related changes went in with it:
+
+- The scroll reveals used `whileInView`. They now use `useInView` plus an explicit `animate` target,
+  so whether a section is visible is ordinary React state rather than something an interrupted
+  animation can leave half-done.
+- Three pages had their own fade-in wrappers on top of the page transition. They duplicated it and
+  were a second place for the same failure, so they went.
+
+The same 40-switch script afterwards: **0 blank pages**.
+
+## The trade-off
+
+The old page now disappears at once instead of fading out, and the new one takes 220 ms to settle
+in. That is a small loss next to the alternative: a blank page is the first thing a visitor notices,
+and on a portfolio it reads as "this person ships broken sites".
+
+The source is in
+[`components/PageTransition.tsx`](https://github.com/f1erfly94/SK-portfilio-project/blob/master/components/PageTransition.tsx)
+and [`components/Reveal.tsx`](https://github.com/f1erfly94/SK-portfilio-project/blob/master/components/Reveal.tsx).

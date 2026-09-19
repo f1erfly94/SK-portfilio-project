@@ -76,6 +76,72 @@
     .rule {
         @apply h-px w-full bg-gradient-to-r from-transparent via-white/15 to-transparent;
     }
+
+    /* Typography for MDX notes: the notes themselves are plain Markdown, no classes. */
+    .note-body {
+        @apply text-[17px] leading-[1.75] text-white/75;
+    }
+
+    .note-body > * + * {
+        @apply mt-5;
+    }
+
+    .note-body h2 {
+        @apply mt-14 font-display text-2xl font-semibold leading-tight text-white xl:text-[28px];
+    }
+
+    .note-body h3 {
+        @apply mt-10 font-display text-xl font-semibold text-white;
+    }
+
+    .note-body a {
+        @apply text-accent underline decoration-accent/40 underline-offset-4 transition-colors hover:decoration-accent;
+    }
+
+    .note-body strong {
+        @apply font-semibold text-white;
+    }
+
+    .note-body ul,
+    .note-body ol {
+        @apply flex flex-col gap-2 pl-5;
+    }
+
+    .note-body ul {
+        @apply list-disc;
+    }
+
+    .note-body ol {
+        @apply list-decimal;
+    }
+
+    .note-body li::marker {
+        @apply text-accent;
+    }
+
+    .note-body :not(pre) > code {
+        @apply rounded-md border border-line bg-white/[0.06] px-1.5 py-0.5 font-mono text-[0.86em] text-white/90;
+    }
+
+    .note-body pre {
+        @apply mt-6 overflow-x-auto rounded-2xl border border-line bg-black/40 p-5 font-mono text-[13px] leading-relaxed text-white/85;
+    }
+
+    .note-body table {
+        @apply mt-6 w-full border-collapse overflow-hidden text-left font-mono text-sm;
+    }
+
+    .note-body th {
+        @apply border-b border-line px-3 py-3 text-[11px] font-normal uppercase tracking-[0.2em] text-white/50;
+    }
+
+    .note-body td {
+        @apply border-b border-line px-3 py-3 text-white/80;
+    }
+
+    .note-body blockquote {
+        @apply border-l-2 border-accent pl-5 text-white/65;
+    }
 }
 
 @layer utilities {

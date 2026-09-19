@@ -1,3 +1,5 @@
+import createMDX from "@next/mdx";
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     eslint: {
@@ -13,4 +15,9 @@ const nextConfig = {
     },
 };
 
-export default nextConfig;
+// Notes in content/notes are MDX modules imported by app/notes/[slug], not pages
+// of their own, so pageExtensions stays at the default. No remark/rehype plugins:
+// Turbopack only accepts them as strings, and nothing here needs one yet.
+const withMDX = createMDX({});
+
+export default withMDX(nextConfig);

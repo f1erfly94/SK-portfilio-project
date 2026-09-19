@@ -1,11 +1,11 @@
 # Serhii Kuznetsov — portfolio
 
 My personal site: the projects I have built, a case study for each one that has a real story
-behind it, and a way to get in touch.
+behind it, notes on the bugs worth writing down, and a way to get in touch.
 
 **[sk-portfilio.vercel.app](https://sk-portfilio.vercel.app)**
 
-**Next.js 15 · React 19 · TypeScript · Tailwind CSS v3 · Framer Motion**
+**Next.js 15 · React 19 · TypeScript · Tailwind CSS v3 · Framer Motion · MDX**
 
 ![The home page](docs/screenshot.jpg)
 
@@ -13,9 +13,11 @@ behind it, and a way to get in touch.
 
 | Route | What it shows |
 | --- | --- |
-| `/` | Hero, counters and the featured projects |
+| `/` | Hero, counters, the featured projects and the latest notes |
 | `/work` | Every project with category filters; older, smaller ones in a compact "Earlier work" list |
 | `/work/[slug]` | Case studies — the problem, the decisions it forced, what was measured — generated statically |
+| `/notes` | Write-ups of bugs and decisions from my projects, with the numbers |
+| `/notes/[slug]` | One note, written in MDX and generated statically |
 | `/services` | What I offer, each item linked to the project where I have already done it |
 | `/resume` | Experience, skills and education, plus the CV as a PDF |
 | `/contacts` | A three-field form and the direct channels |
@@ -45,35 +47,31 @@ and the navigation.
 and tell search engines they were duplicates of the home page. Each of those segments now has a
 server `layout.tsx` calling `pageMetadata()` from [`lib/metadata.ts`](lib/metadata.ts).
 
-## Three bugs worth remembering
+## Notes
 
-**`backdrop-filter` was the lag.** Measured in a headed Chrome on a 165 Hz display — headless
-Chrome renders at 60 fps whatever the monitor, so it cannot see this — the worst frame while
-scrolling was 146 ms with blurred cards and header, 12 ms without. The blur became more opaque
-surfaces, and `blur-3xl` glows became radial gradients.
+The bugs that taught me the most are written up on the site, each with the measurements:
 
-**`AnimatePresence mode="wait"` blanked whole pages.** In the App Router, a navigation that
-interrupted the old page's fade-out left the wrapper stuck at `opacity: 0`: header and footer on
-screen, content invisible. On production that happened on 30 of 40 navigations. There is now no
-exit animation at all; the entrance is keyed on the pathname and can only animate towards visible.
-Searching for this with `innerText` finds nothing — the text is there at zero opacity — so it has
-to be measured as computed opacity.
-
-**A counter that reset "4 years" to "0".** react-countup's scroll spy started the first counter
-on mount instead of on scroll, never marked it as done, and reset it as soon as it scrolled out of
-view. It was replaced with a small counter on Framer Motion's `useInView`, the same mechanism the
-scroll reveals use.
+- [The lag my test browser could not see](https://sk-portfilio.vercel.app/notes/the-lag-my-test-browser-could-not-see)
+  — headless Chrome draws at 60 fps, so on a 165 Hz screen it hid a 146 ms frame caused by
+  `backdrop-filter`.
+- [AnimatePresence and the pages that went blank](https://sk-portfilio.vercel.app/notes/animatepresence-and-the-blank-pages)
+  — an exit animation in the App Router left 30 of 40 pages at `opacity: 0`.
+- [The counter that reset "4 years" to zero](https://sk-portfilio.vercel.app/notes/the-counter-that-reset-to-zero)
+  — two halves of react-countup disagreeing about when to start.
 
 ## Project structure
 
 ```
 app/                  routes; layout.tsx files carry metadata for client pages
   work/[slug]/        case-study pages, one per entry in data/projects.ts
+  notes/[slug]/       one page per note, generated statically
   opengraph-image.tsx social preview card, generated at build time
-components/           ProjectCard, Reveal, Stats, ContactForm, EarlierWork, …
+components/           ProjectCard, Reveal, Stats, ContactForm, NoteList, …
+content/notes/        the notes themselves, one .mdx file each
 data/
   projects.ts         every project, newest first
   case-studies.ts     long-form notes, keyed by project slug
+  notes.ts            title, date, summary and tags of every note
   resume.ts           experience, skills and education
 lib/
   site.ts             name, role, contacts, CV path, canonical URL
@@ -92,6 +90,16 @@ public/assets/        portrait, project screenshots, the CV
    [`data/case-studies.ts`](data/case-studies.ts).
 
 The `/work/<slug>` page, the sitemap entry, the filter chip and the counters follow on their own.
+
+## Adding a note
+
+1. Write it as `content/notes/<slug>.mdx` — plain Markdown; typography comes from the
+   `.note-body` rules in `app/globals.css`, and links are handled in
+   [`mdx-components.tsx`](mdx-components.tsx).
+2. Add its title, date, summary, tags and loader to the top of `notes` in
+   [`data/notes.ts`](data/notes.ts).
+
+The page, the index, the home-page list, the sitemap entry and the reading time follow on their own.
 
 ## Running it
 

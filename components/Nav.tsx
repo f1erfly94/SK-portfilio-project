@@ -4,12 +4,7 @@ import Link from "next/link";
 import {usePathname} from "next/navigation";
 import {motion} from "framer-motion";
 
-const links = [
-    {name: "home", path: "/"},
-    {name: "work", path: "/work"},
-    {name: "services", path: "/services"},
-    {name: "resume", path: "/resume"},
-];
+import {isActivePath, navLinks} from "@/lib/nav";
 
 /**
  * The active underline is a single shared element (`layoutId`), so it slides
@@ -20,14 +15,14 @@ const Nav = () => {
 
     return (
         <nav className="flex gap-8">
-            {links.map((link) => {
-                const active = link.path === pathname;
+            {navLinks.map((link) => {
+                const active = isActivePath(pathname, link.path);
 
                 return (
                     <Link
                         key={link.path}
                         href={link.path}
-                        aria-current={active ? "page" : undefined}
+                        aria-current={link.path === pathname ? "page" : active ? "true" : undefined}
                         className={`relative py-1 font-mono text-sm capitalize transition-colors duration-300 ${
                             active ? "text-accent" : "text-white/70 hover:text-white"
                         }`}
