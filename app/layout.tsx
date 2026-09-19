@@ -31,7 +31,7 @@ const spaceGrotesk = Space_Grotesk({
 });
 
 const description =
-    "Frontend developer from Cherkasy, Ukraine. I build production web apps and landing pages with Next.js and TypeScript — from an AI recipe product with its own mobile app to a 3D keyboard rendered in WebGL.";
+    "Frontend developer from Cherkasy, Ukraine. I build production web apps and landing pages with Next.js and TypeScript — from a multiplayer whiteboard with its own sync engine to an AI recipe product with a mobile app.";
 
 export const metadata = {
     metadataBase: new URL(siteUrl),

@@ -30,6 +30,26 @@ export interface Project {
 
 export const projects: Project[] = [
     {
+        slug: "tessera",
+        category: "Real-time",
+        title: "Tessera — Multiplayer Whiteboard",
+        year: "2026",
+        summary:
+            "A shared canvas with live cursors, offline edits that merge on reconnect and per-person undo — with the sync written from scratch.",
+        highlights: [
+            "No CRDT library and no realtime service: the room's Durable Object sets one order, conflicts resolve per property, and every change is applied exactly once however often it is re-sent.",
+            "Offline is not a special mode — edits queue on the device, survive a reload and merge when the connection returns. A Go offline switch lets anyone try it.",
+            "A simulation runs 120 seeded sessions of 2–4 clients through dropped connections and refused changes, and checks every client ends on the server's board.",
+            "Canvas 2D that holds 20,000 shapes: batched draw calls, greeked text and incremental ordering, each chosen from a measurement.",
+        ],
+        stack: ["React", "TypeScript", "Canvas 2D", "Cloudflare Workers", "Durable Objects"],
+        image: "/assets/work/Tessera.png",
+        live: "https://tessera.flytomars94.workers.dev",
+        github: null,
+        sourceNote: "Private repo",
+        featured: true,
+    },
+    {
         slug: "accessible-combobox",
         category: "Accessibility",
         title: "Accessible Combobox — a real comparison",
@@ -65,7 +85,7 @@ export const projects: Project[] = [
         image: "/assets/work/Quorum.png",
         live: "https://quorum-planning-poker.vercel.app",
         github: "https://github.com/f1erfly94/quorum-planning-poker",
-        featured: true,
+        featured: false,
     },
     {
         slug: "klyk",
