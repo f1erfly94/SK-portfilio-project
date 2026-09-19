@@ -1,267 +1,144 @@
-"use client";
+import type {ReactNode} from "react";
+import {BsArrowUpRight, BsDownload} from "react-icons/bs";
 
-import React from 'react';
-import {ScrollArea} from "@/components/ui/scroll-area";
-import {Tabs, TabsContent, TabsList, TabsTrigger} from "@/components/ui/tabs";
-import {Tooltip, TooltipContent, TooltipProvider, TooltipTrigger} from "@/components/ui/tooltip";
-import {FaHtml5, FaReact, FaFigma, FaJs, FaGithub, FaCss3Alt} from 'react-icons/fa';
-import {TbBrandPrisma, TbBrandGit, TbTestPipe} from "react-icons/tb";
-import {
-    SiTypescript, SiRedux, SiTailwindcss, SiWebpack, SiNextdotjs,
-    SiSass, SiFramer, SiGraphql, SiJest, SiVitest, SiChartdotjs,
-    SiReactquery, SiVite, SiClaude, SiOpenai
-} from "react-icons/si";
-import {GiBearFace} from "react-icons/gi";
+import Reveal from "@/components/Reveal";
+import {education, experience, languages, skillGroups, summary} from "@/data/resume";
+import {cvPath, profile} from "@/lib/site";
 
-const about = {
-    title: "About me",
-    description: "Passionate Frontend Developer with hands-on experience in modern web technologies.",
-    info: [
-        {fieldName: "Name:", fieldValue: " Serhii Kuznetsov"},
-        {fieldName: "Phone:", fieldValue: " +38 (067) 715-75-91", link: "tel:+380677157591"},
-        {fieldName: "Experience:", fieldValue: " 4 Years"},
-        {fieldName: "Telegram:", fieldValue: " Serhii_Kuznetsov05", link: "https://t.me/Serhii_Kuznetsov05"},
-        {fieldName: "Open to work:", fieldValue: " Yes"},
-        {fieldName: "Languages:", fieldValue: " Ukrainian, English"},
-        {fieldName: "Email:", fieldValue: "serhii.kuznetsov05@gmail.com", link: "mailto:serhii.kuznetsov05@gmail.com"}
+/**
+ * One page instead of the template's four tabs: a recruiter scrolls, they do
+ * not click through tabs looking for the dates. Rendered on the server — the
+ * only moving parts are the `Reveal` wrappers.
+ */
+const facts = [
+    {label: "Experience", value: `${profile.yearsOfExperience} years`},
+    {label: "Based in", value: profile.location},
+    {label: "Languages", value: languages},
+    {label: "Open to work", value: profile.available ? "Yes — full-time or freelance" : "Not right now"},
+];
 
-    ]
-};
+/** Same two-column rhythm as the case studies: a sticky heading on the left, content on the right. */
+const Block = ({title, children}: {title: string; children: ReactNode}) => (
+    <section className="mt-20 grid gap-8 md:grid-cols-[minmax(0,14rem)_minmax(0,1fr)] md:gap-10">
+        <Reveal>
+            <h2 className="h3 self-start text-white/50 md:sticky md:top-28">{title}</h2>
+        </Reveal>
+        <div className="min-w-0">{children}</div>
+    </section>
+);
 
-const experience = {
-    icon: '/assets/resume/badge.svg',
-    title: 'My experience',
-    description: "Skilled Front-End Developer with expertise in building responsive, user-friendly interfaces.",
-    items: [
-        {
-            company: "Peiko",
-            link: "https://peiko.space/",
-            position: "Front-End Developer",
-            duration: "2022-2024",
-            stack: ["Next.js", "React", "TypeScript", "Zustand", "SCSS", "Framer Motion", "GraphQL", "Jest", "Vitest", "Git"],
-            bullets: [
-                "Developed responsive and accessible web applications using React, Next.js, and TypeScript with a mobile-first approach",
-                "Built reusable UI components and design systems with SCSS and Framer Motion, improving development consistency across projects",
-                "Implemented efficient state management using Zustand, optimizing application performance and scalability",
-                "Integrated REST and GraphQL APIs, ensuring seamless communication between front-end and back-end services",
-                "Collaborated closely with designers and back-end developers to deliver high-quality features and maintain code quality through peer reviews",
-                "Covered shared UI components and utility logic with Jest and Vitest unit tests, raising confidence in refactors and reducing regressions before release",
-            ],
-        },
-        {
-            company: "Amazon Agency",
-            link: null,
-            position: "Front-End Developer",
-            duration: "2025-2026",
-            stack: ["React 19", "TypeScript", "Tailwind CSS v4", "Chart.js", "TanStack Query", "Vite", "Playwright", "Vitest", "Claude", "ChatGPT"],
-            bullets: [
-                "Built front-end for automation tools that streamline Amazon ad campaign management across multiple client accounts",
-                "Improved Core Web Vitals (LCP, CLS, INP) on client dashboards — achieved measurably faster perceived load times through code splitting, lazy loading, and image optimization",
-                "Used Claude and ChatGPT to generate campaign performance summaries and ad copy suggestions integrated directly in the dashboard UI",
-                "Created interactive data-rich components — campaign charts, KPI tables, real-time budget trackers — using Chart.js and custom React hooks",
-                "Integrated Amazon Advertising and Product APIs; ensured WCAG 2.1 AA accessibility and full cross-browser compatibility",
-                "Wrote end-to-end test suites with Playwright covering critical dashboard flows, and unit/component tests with Vitest to prevent regressions across releases",
-            ],
-        },
-    ]
-};
-
-const education = {
-    icon: '/assets/resume/cap.svg',
-    title: 'My education',
-    description: "My academic background in Computer Science and Front-End Development.",
-    items: [
-        {
-            institution: "Kyiv National University of Construction and Architecture",
-            degree: "Bachelor's degree in Computer Sciences",
-            duration: "2014-2018"
-        },
-        {
-            institution: "Kyiv National University of Construction and Architecture",
-            degree: "Master's degree in Computer Sciences",
-            duration: "2018-2019"
-        },
-        {institution: "dev{education}", degree: "Programming Course Front-End", duration: "2021-2022"},
-        {institution: "Playtech University", degree: "Web Design UI/UX Beginner course", duration: "2024-2024"},
-    ]
-};
-
-const skills = {
-    title: 'My skills',
-    description: "Technologies and tools I work with:",
-    skillList: [
-        {icon: <FaHtml5/>, name: 'HTML5'},
-        {icon: <FaCss3Alt/>, name: 'CSS3'},
-        {icon: <FaReact/>, name: 'React'},
-        {icon: <SiRedux/>, name: 'Redux'},
-        {icon: <SiNextdotjs/>, name: 'Next.js'},
-        {icon: <FaJs/>, name: 'JavaScript'},
-        {icon: <SiTypescript/>, name: 'TypeScript'},
-        {icon: <SiWebpack/>, name: 'Webpack '},
-        {icon: <FaGithub/>, name: 'Github '},
-        {icon: <SiTailwindcss/>, name: 'Tailwind CSS'},
-        {icon: <TbBrandPrisma/>, name: 'Prisma'},
-        {icon: <FaFigma/>, name: 'Figma'},
-        {icon: <TbBrandGit/>, name: 'Git'},
-        {icon: <SiSass/>, name: 'SCSS'},
-        {icon: <GiBearFace/>, name: 'Zustand'},
-        {icon: <SiFramer/>, name: 'Framer Motion'},
-        {icon: <SiGraphql/>, name: 'GraphQL'},
-        {icon: <SiJest/>, name: 'Jest'},
-        {icon: <SiVitest/>, name: 'Vitest'},
-        {icon: <TbTestPipe/>, name: 'Playwright'},
-        {icon: <SiChartdotjs/>, name: 'Chart.js'},
-        {icon: <SiReactquery/>, name: 'TanStack Query'},
-        {icon: <SiVite/>, name: 'Vite'},
-        {icon: <SiClaude/>, name: 'Claude'},
-        {icon: <SiOpenai/>, name: 'ChatGPT'},
-    ]
-};
-
-const Resume = () => {
+export default function Resume() {
     return (
-        <div
-            className="min-h-[80vh] flex items-start justify-center py-12 xl:py-24 "
-        >
-            <div className="container mx-auto">
-                <Tabs
-                    defaultValue="experience"
-                    className="flex flex-col xl:flex-row xl:gap-[30px]">
-                    <TabsList
-                        className="flex flex-col w-full max-w-[380px] mx-auto xl:mx-0 gap-6">
-                        <TabsTrigger value="experience">Experience</TabsTrigger>
-                        <TabsTrigger value="education">Education</TabsTrigger>
-                        <TabsTrigger value="skills">Skills</TabsTrigger>
-                        <TabsTrigger value="about">About me</TabsTrigger>
-                    </TabsList>
-                    <div className="min-h-[70vh] w-full">
-                        <TabsContent value="experience" className="w-full">
-                            <div className="flex flex-col gap-[30px] text-center xl:text-left">
-                                <h3 className="text-4xl font-bold">{experience.title}</h3>
-                                <p className="max-w-[600px] text-white/60 mx-auto xl:mx-0">{experience.description}</p>
-                                <ScrollArea className="h-auto">
-                                    <ul className="flex flex-col gap-6">
-                                        {experience.items.map((item, index) => {
-                                            return <li
-                                                key={index}
-                                                className="card h-auto p-6 xl:p-8 flex flex-col items-center lg:items-start gap-3"
-                                            >
-                                                <div className="flex flex-wrap items-center gap-3">
-                                                    <span className="w-[6px] h-[6px] rounded-full bg-accent"></span>
-                                                    <p className="font-mono text-sm text-accent whitespace-nowrap">{item.duration}</p>
-                                                    <p className="text-white/60">
-                                                        - {item.link ? (
-                                                        <a href={item.link} target="_blank"
-                                                           rel="noopener noreferrer" className="underline">
-                                                            {item.company}
-                                                        </a>
-                                                    ) : item.company}
-                                                    </p>
-                                                </div>
-                                                <h3 className="h3 text-center lg:text-left">{item.position}</h3>
-                                                {item.stack && (
-                                                    <div className="flex flex-wrap gap-x-2 gap-y-1 justify-center lg:justify-start mb-1">
-                                                        {item.stack.map((tech, techIndex) => (
-                                                            <span key={techIndex}
-                                                                  className="text-xs text-accent/80 bg-accent/10 px-2 py-0.5 rounded">
-                                                                {tech}
-                                                            </span>
-                                                        ))}
-                                                    </div>
-                                                )}
-                                                <ul className="list-disc space-y-1.5 pl-5 text-left text-sm leading-relaxed text-white/70">
-                                                    {item.bullets.map((point, pointIndex) => (
-                                                        <li key={pointIndex}>{point}</li>
-                                                    ))}
-                                                </ul>
-                                            </li>
-                                        })}
-                                    </ul>
-                                </ScrollArea>
-                            </div>
-                        </TabsContent>
-                        <TabsContent value="education" className="w-full">
-                            <div className="flex flex-col gap-[30px] text-center xl:text-left">
-                                <h3 className="text-4xl font-bold">{education.title}</h3>
-                                <p className="max-w-[600px] text-white/60 mx-auto xl:mx-0">{education.description}</p>
-                                <ScrollArea className="h-auto">
-                                    <ul className="grid grid-cols-1 lg:grid-cols-2 gap-[30px]">
-                                        {education.items.map((item, index) => {
-                                            return <li
-                                                key={index}
-                                                className="card h-auto p-6 xl:p-8 flex flex-col items-center lg:items-start gap-3"
-                                            >
-                                                <span className="text-accent">{item.degree} </span>
-                                                <h3 className="text-xl max-w-[260px] min-h-[20px] text-center lg:text-left">{item.duration}</h3>
-                                                <div className="flex items-baseline gap-3">
-                                                    <span className="w-[6px] h-[6px] rounded-full bg-accent"></span>
-                                                    <p className="text-white/60">{item.institution}</p>
-                                                </div>
-                                            </li>
-                                        })}
-                                    </ul>
-                                </ScrollArea>
-                            </div>
-                        </TabsContent>
-                        <TabsContent value="skills" className="w-full h-full">
-                            <div className="flex flex-col gap-[30px]">
-                                <div className="flex flex-col gap-[30px] text-center xl:text-left">
-                                    <h3 className="text-4xl font-bold">{skills.title}</h3>
-                                    <p className="max-w-[600px] text-white/60 mx-auto xl:mx-0">{skills.description}</p>
-                                </div>
-                                <ul className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:gap-[30px] gap-4">
-                                    {
-                                        skills.skillList.map((skill, index) => {
-                                            return <li key={index}>
-                                                <TooltipProvider delayDuration={100}>
-                                                    <Tooltip>
-                                                        <TooltipTrigger
-                                                            className="w-full h-[150px] bg-[#232329] rounded-xl flex justify-center items-center group">
-                                                            <div
-                                                                className="text-6xl group-hover:text-accent transition-all duration-300">{skill.icon}</div>
-                                                        </TooltipTrigger>
-                                                        <TooltipContent>
-                                                            <p className="capitalize">{skill.name}</p>
-                                                        </TooltipContent>
-                                                    </Tooltip>
-                                                </TooltipProvider>
-                                            </li>
-                                        })
-                                    }
-                                </ul>
-                            </div>
-                        </TabsContent>
-                        <TabsContent value="about"
-                                     className="w-full text-center xl:text-left">
-                            <div className="flex flex-col gap-[30px]">
-                                <h3 className="text-4xl font-bold">{about.title}</h3>
-                                <p className="max-w-[600px] text-white/60 mx-auto xl:mx-0">{about.description}</p>
-                                <ul className="grid grid-cols-1 xl:grid-cols-2 gap-y-6 max-w-[980px] mx-auto xl:mx-0">
-                                    {about.info.map((item, index) => {
-                                        return <li key={index}
-                                                   className="flex items-center justify-center xl:justify-start gap-4"
-                                        >
-                                            <span className="text-white/60">{item.fieldName}</span>
-                                            {item.link ? (
-                                                <a href={item.link}
-                                                   className="text-xl hover:text-accent transition-colors underline"
-                                                   target={item.link.startsWith('https') ? "_blank" : ""}
-                                                   rel={item.link.startsWith('https') ? "noopener noreferrer" : ""}>
-                                                    {item.fieldValue}
-                                                </a>
-                                            ) : (
-                                                <span className="text-xl">{item.fieldValue}</span>
-                                            )}
-                                        </li>
-                                    })}
-                                </ul>
-                            </div>
-                        </TabsContent>
-                    </div>
-                </Tabs>
-            </div>
-        </div>
-    );
-};
+        <article className="container mx-auto pb-24 pt-6 xl:pt-10">
+            <Reveal className="max-w-3xl">
+                <p className="label">Resume</p>
+                <h1 className="h1 mt-4">{profile.name}</h1>
+                <p className="mt-3 font-display text-xl text-accent xl:text-2xl">{profile.role}</p>
+                <p className="mt-6 text-lg leading-relaxed text-white/65">{summary}</p>
 
-export default Resume;
+                <a
+                    href={cvPath}
+                    download
+                    className="group mt-8 inline-flex items-center gap-3 rounded-full bg-accent px-7 py-3.5 font-mono text-sm font-medium text-primary transition-transform duration-300 hover:-translate-y-0.5"
+                >
+                    Download CV (PDF)
+                    <BsDownload aria-hidden="true"/>
+                </a>
+            </Reveal>
+
+            <Reveal delay={0.06} className="mt-14">
+                <dl className="grid grid-cols-1 gap-px overflow-hidden rounded-2xl border border-line bg-line sm:grid-cols-2 xl:grid-cols-4">
+                    {facts.map((fact) => (
+                        <div key={fact.label} className="bg-primary/80 p-6">
+                            <dt className="label">{fact.label}</dt>
+                            <dd className="mt-2 text-white">{fact.value}</dd>
+                        </div>
+                    ))}
+                </dl>
+            </Reveal>
+
+            <Block title="Experience">
+                <ol className="flex flex-col gap-6">
+                    {experience.map((job, index) => (
+                        <Reveal key={job.company} as="li" delay={index * 0.05} className="card p-6 xl:p-8">
+                            <p className="label flex flex-wrap items-center gap-x-4 gap-y-1">
+                                <span className="text-accent">{job.duration}</span>
+                                {job.link ? (
+                                    <a
+                                        href={job.link}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="inline-flex items-center gap-1 transition-colors hover:text-accent"
+                                    >
+                                        {job.company}
+                                        <BsArrowUpRight aria-hidden="true"/>
+                                    </a>
+                                ) : (
+                                    <span>{job.company}</span>
+                                )}
+                            </p>
+                            <h3 className="h3 mt-3">{job.position}</h3>
+
+                            <ul className="mt-5 flex flex-col gap-3">
+                                {job.bullets.map((bullet) => (
+                                    <li key={bullet} className="flex gap-3 text-sm leading-relaxed text-white/70 xl:text-base">
+                                        <span aria-hidden="true" className="mt-2.5 h-1.5 w-1.5 shrink-0 rounded-full bg-accent"/>
+                                        {bullet}
+                                    </li>
+                                ))}
+                            </ul>
+
+                            <ul className="mt-6 flex flex-wrap gap-2 border-t border-line pt-5">
+                                {job.stack.map((tech) => (
+                                    <li
+                                        key={tech}
+                                        className="rounded-full border border-line px-3 py-1 font-mono text-[11px] text-white/70"
+                                    >
+                                        {tech}
+                                    </li>
+                                ))}
+                            </ul>
+                        </Reveal>
+                    ))}
+                </ol>
+            </Block>
+
+            <Block title="Skills">
+                <div className="grid gap-px overflow-hidden rounded-2xl border border-line bg-line sm:grid-cols-2">
+                    {skillGroups.map((group) => (
+                        <div key={group.title} className="bg-primary/80 p-6">
+                            <h3 className="label text-accent">{group.title}</h3>
+                            <ul className="mt-4 flex flex-wrap gap-2">
+                                {group.items.map((item) => (
+                                    <li
+                                        key={item}
+                                        className="rounded-full border border-line px-3.5 py-1.5 font-mono text-xs text-white/80"
+                                    >
+                                        {item}
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
+                    ))}
+                </div>
+            </Block>
+
+            <Block title="Education">
+                <ol className="divide-y divide-line border-y border-line">
+                    {education.map((item) => (
+                        <li
+                            key={item.degree}
+                            className="grid gap-2 py-5 sm:grid-cols-[8rem_minmax(0,1fr)] sm:gap-6"
+                        >
+                            <span className="label pt-1 text-accent">{item.duration}</span>
+                            <div>
+                                <p className="font-display text-lg font-semibold text-white">{item.degree}</p>
+                                <p className="mt-1 text-sm text-white/55">{item.institution}</p>
+                            </div>
+                        </li>
+                    ))}
+                </ol>
+            </Block>
+        </article>
+    );
+}
