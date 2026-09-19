@@ -20,7 +20,10 @@ interface CountUpNumberProps {
 
 const CountUpNumber = ({end, delay = 0, className}: CountUpNumberProps) => {
     const ref = useRef<HTMLSpanElement>(null);
-    const inView = useInView(ref, {once: true, margin: "0px 0px -10% 0px"});
+    // No negative margin: on a 1440x900 screen the stats row already peeks in at
+    // the bottom on load, and a row of zeroes waiting to be scrolled 10% further
+    // reads as broken, not as an animation about to start.
+    const inView = useInView(ref, {once: true});
     const reduced = useReducedMotion();
 
     useEffect(() => {
