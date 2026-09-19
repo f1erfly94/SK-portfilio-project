@@ -8,9 +8,7 @@ import Socials from "@/components/Socials";
 import StackMarquee from "@/components/StackMarquee";
 import Stats from "@/components/Stats";
 import {featuredProjects, projectNumber, projects} from "@/data/projects";
-import {profile, siteUrl} from "@/lib/site";
-
-const CV_PATH = "/assets/download/Serhii_Kuznetsov_Resume.pdf";
+import {cvPath, profile, siteUrl} from "@/lib/site";
 
 /** Tells search engines this site is about a person, and which profiles are theirs. */
 const personJsonLd = {
@@ -61,7 +59,7 @@ export default function Home() {
                             </Link>
 
                             <a
-                                href={CV_PATH}
+                                href={cvPath}
                                 download
                                 className="inline-flex items-center gap-3 rounded-full border border-line px-7 py-3.5 font-mono text-sm text-white transition-colors duration-300 hover:border-accent hover:text-accent"
                             >

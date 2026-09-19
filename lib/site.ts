@@ -7,6 +7,9 @@ export const siteUrl =
         ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
         : "http://localhost:3000");
 
+/** The downloadable CV, linked from the hero and the resume page. */
+export const cvPath = "/assets/download/Serhii_Kuznetsov_Resume.pdf";
+
 export const profile = {
     name: "Serhii Kuznetsov",
     role: "Frontend Developer",
