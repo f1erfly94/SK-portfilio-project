@@ -46,9 +46,9 @@ export default function Home() {
 
                         <p className="mx-auto mt-6 max-w-xl text-base leading-relaxed text-white/65 xl:mx-0 animate-rise [animation-delay:80ms]">
                             I&apos;m {profile.name}, a frontend developer working in Next.js and TypeScript.
-                            Lately that has meant a full-stack cooking product with AI recipe import,
-                            subscriptions and its own mobile app — and a 3D keyboard landing page rendered
-                            in WebGL without a single model file.
+                            Lately that has meant a multiplayer whiteboard with its own sync engine, a
+                            full-stack cooking product with AI recipe import and its own mobile app — and a
+                            3D keyboard landing page rendered in WebGL without a single model file.
                         </p>
 
                         <div className="mt-9 flex flex-col items-center gap-4 sm:flex-row xl:justify-start animate-rise [animation-delay:120ms]">

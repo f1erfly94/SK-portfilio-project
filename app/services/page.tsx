@@ -28,7 +28,7 @@ const services = [
         title: "Real-time features",
         description:
             "State shared between people — presence, reconnection, server-authoritative data — designed so what one person sees cannot be read early from the network tab.",
-        proof: ["quorum"],
+        proof: ["tessera", "quorum"],
     },
     {
         title: "Accessibility",
@@ -46,7 +46,7 @@ const services = [
         title: "Tests that catch bugs",
         description:
             "Playwright end-to-end suites, component and unit tests, and CI that runs them on every push — aimed at the flows that would actually cost you users when they break.",
-        proof: ["cook-galaxy", "accessible-combobox"],
+        proof: ["tessera", "accessible-combobox"],
     },
 ];
 

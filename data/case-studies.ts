@@ -16,6 +16,49 @@ export interface CaseStudy {
 }
 
 export const caseStudies: Record<string, CaseStudy> = {
+    tessera: {
+        role: "Solo — sync protocol, server, renderer, interface",
+        problem:
+            "Quorum showed I can keep a little state in step between people. A whiteboard is the hard version of that: a large shared document, several people editing the same objects at once, and connections that drop in the middle of a drag. I wanted to build the synchronisation myself rather than hand it to a CRDT library or a realtime service — that is the part worth showing — and then test it hard enough to trust it.",
+        decisions: [
+            {
+                title: "The server's only job is order",
+                body: "Each room is one Durable Object, and a Durable Object is single-threaded, so every change gets applied in one sequence and broadcast with its number. Conflicts resolve per property in that order: move a shape while someone recolours it and both survive. It is the model Figma describes for its own multiplayer, and for shapes it is enough — nobody types into the same word character by character, so there is nothing a sequence CRDT would add.",
+            },
+            {
+                title: "Instant, but never flickering",
+                body: "Each client keeps the server's board and its own view: the server's board plus its unacknowledged changes. A remote write to a property this client is still waiting to hear back about is not shown, because the server has already ordered it before ours — showing it in between would make the shape jump back and forth.",
+            },
+            {
+                title: "Exactly once, even after a reconnect",
+                body: "Every change carries its client's id and a counter. The room remembers the last counter it applied per client and says so when a client reconnects, so a change is never applied twice and never re-sent once applied. A client may only use the id it said hello with — otherwise one tab could advance another's counter and silently swallow its edits.",
+            },
+            {
+                title: "Offline is the same code path",
+                body: "While disconnected, changes queue exactly as they do online, are also written to local storage so a reload keeps them, and go out on reconnect; the server's ordering then does the merging. The Go offline switch exists because browsers' own offline emulation does not reliably cut an open WebSocket — and a visitor should be able to try it without unplugging anything.",
+            },
+            {
+                title: "Layer order that never renumbers",
+                body: "Stacking order is a fractional index: there is always a key between two keys, so bringing a shape to the front rewrites that one shape. The first version used fractions only, and a test that kept putting new shapes on top pushed keys past the 64-character limit within a few hundred inserts. Keys now carry an integer part; ten thousand such inserts stay at four characters.",
+            },
+            {
+                title: "Measured the renderer before optimising it",
+                body: "Ten thousand separate strokeRect calls took 1.8 ms of JavaScript and 34 ms of frame — every fill or stroke is its own operation for the GPU process. So above 800 visible shapes the renderer batches one path per style, a few dozen calls instead of ten thousand, and small or plentiful note text is drawn as grey bars, because fillText at a zoom that changes every frame rasterises every glyph again.",
+            },
+        ],
+        measured: [
+            {value: "120 × 500", label: "simulated sessions × steps", note: "2–4 clients, dropped connections, refused changes — every one converges"},
+            {value: "54 + 7", label: "unit + end-to-end tests", note: "each end-to-end test drives two browsers against the real Worker"},
+            {value: "5.6 ms", label: "render at 10,000 shapes", note: "JavaScript per frame, in batched mode"},
+            {value: "0", label: "sync libraries", note: "ordering, merging, offline and exactly-once are all in the repo"},
+        ],
+        gallery: [
+            {src: "/assets/work/tessera/together.png", alt: "Two people on one board: the other person's cursor and selection in their colour"},
+            {src: "/assets/work/tessera/offline.png", alt: "Working offline with two changes queued"},
+            {src: "/assets/work/tessera/bench.png", alt: "The renderer benchmark with 20,000 shapes"},
+        ],
+    },
+
     "accessible-combobox": {
         role: "Solo — implementation, testing, tooling",
         problem:
